@@ -1,0 +1,326 @@
+<p style="color: #dad6d6;">L.A.</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero Informativo de Comisiones AT&T</title>
+    <style>
+        :root {
+            --att-blue: #00A8E0;
+            --att-dark: #0073AE;
+            --light-gray: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+     
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header {
+            border-bottom: 3px solid var(--att-blue);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        h1 {
+            color: var(--att-dark);
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .logo {
+            font-weight: bold;
+            color: var(--att-blue);
+            font-size: 32px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Estilos Dinámicos */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .result-display {
+            background-color: var(--att-dark);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .result-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* Estilo de Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--att-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        h2 {
+            font-size: 20px;
+            color: var(--att-dark);
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-left: 5px;
+            border-left: 4px solid var(--att-blue);
+        }
+        .highlight {
+            font-weight: bold;
+            color: #ffc107; 
+        }
+        .note-highlight {
+            font-weight: bold;
+            color: #d9534f; 
+        }
+        .bonus-note {
+            background-color: #fff3cd; 
+            border-left: 5px solid #ffc107;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #856404;
+            text-align: justify;
+        }
+        .rules-section {
+            padding-top: 20px;
+        }
+        .rules-list {
+            list-style: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        .rules-list li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="logo">AT&T</div>
+        <h1>Esquema de Comisiones (Entrenamiento)</h1>
+    </header>
+
+    <div class="info-grid">
+        
+        <div>
+            <h2>1. Pago Semanal Base (Garantía) 📍</h2>
+            <p>El pago semanal fijo se asigna según la Región del vendedor.</p>
+            <p>Selecciona tu ciudad para confirmar el pago semanal:</p>
+
+            <div class="form-group">
+                <label for="citySelector">Ciudad de Operación:</label>
+                <select id="citySelector" onchange="updateBasePay()">
+                    <option value="" data-pay="0" disabled selected>--- Seleccionar ---</option>
+                    <option value="PUEBLA" data-pay="2000">PUEBLA</option>
+                    <option value="CDMX" data-pay="2000">CDMX</option>
+                    <option value="VERACRUZ" data-pay="2000">VERACRUZ</option>
+                    <option value="GUADALAJARA" data-pay="2000">GUADALAJARA</option>
+                    <option value="TIJUANA" data-pay="2000">TIJUANA</option>
+                    <option value="MONTERREY" data-pay="2500">MONTERREY</option>
+                    <option value="SALTILLO" data-pay="2500">SALTILLO</option>
+                    <option value="ENSENADA" data-pay="3000">ENSENADA</option>
+                    <option value="MEXICALI" data-pay="3000">MEXICALI</option>
+                </select>
+            </div>
+            
+            <div class="result-display">
+                <div>Pago Semanal:</div>
+                <div class="result-value" id="basePayDisplay">$0.00</div>
+            </div>
+        </div>
+
+        <div>
+            <h2>2. Cuotas y Factor de Pago 📈</h2>
+            <p>La meta y el factor para pago de comisión dependen de la antigüedad del vendedor (curva de aprendizaje) y tipo de plan.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="color: #00A8E0;"> _______</th>
+                        <th>Meta Mensual (Act.)</th>
+                        <th>Meta Semanal (Act.)</th>
+                        <th>Factor Activaciones (PLUS)</th>
+                        <th>Factor Activaciones (BÁSICO)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mes 1</td>
+                        <td>4 Activaciones</td>
+                        <td><span class="note-highlight">1</span> Act.</td>
+                        <td><span class="note-highlight">1.0 X</span></td>
+                        <td><span class="note-highlight">0.5 X</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mes 2</td>
+                        <td>6 Activaciones</td>
+                        <td><span class="note-highlight">1.5</span> Act.</td>
+                        <td><span class="note-highlight">1.2 X</span></td>
+                        <td><span class="note-highlight">0.5 X</span></td>
+                    </tr>
+                    <tr>
+                        <td>Mes 3</td>
+                        <td>8 Activaciones</td>
+                        <td><span class="note-highlight">2</span> Act.</td>
+                        <td><span class="note-highlight">1.5 X</span></td>
+                        <td><span class="note-highlight">0.5 X</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            
+        </div>
+        
+
+    </div>
+    <div class="bonus-note">
+                <li>Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span> (sin importar el mes).</li>
+                <br>
+                <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                <ol>
+                    
+                    <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li><br>
+                    <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span> Y tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                </ol>
+            </div>
+    
+    <div class="rules-section">
+        <hr>
+        <h2>3. Definiciones de Planes y Reglas de Cuota ℹ️</h2>
+
+        <h3>Definiciones de Planes y Factor Básico</h3>
+        <p>Las comisiones se pagan semanalmente siempre y cuándo lleguen a su cuota semanal</p>
+        <ul class="rules-list">
+            <li><strong>BÁSICO:</strong> AZUL 1, LITE 1 (Con y sin equipo).</li>
+            <li><strong>PLUS:</strong> AZUL 2, AZUL 3, PLATA, ORO, BLACK, TITANIO, DIAMANTE, LITE 2, LITE 3, LITE 4, LITE 5, LITE 6, LITE 7 (Con y sin equipo).</li>
+            <li>Los planes Azul 1 y LITE 1 tienen como logro de cuota un valor de <span class="note-highlight">0.5</span>.</li>
+        </ul>
+
+        <h3>Reglas de Planes Simples / Simple Plus</h3>
+        <ul class="rules-list">
+            <li><strong>PLANES SIMPLES - SIMPLE PLUS (MASIVO) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">0.5X</span>.</li>
+            <li><strong>PLANES SIMPLES - SIMPLE PLUS (EMPRESARIAL) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">1X</span>.</li>
+            
+            <li>
+                <strong>Planes SIMPLES/PLUS de 18 y 24 meses (Masivo y Empresarial):</strong> 
+                <span id="simplePlusRuleDisplay" class="note-highlight" style="margin-left: 10px;">Seleccione su ciudad para ver la regla de conteo.</span>
+            </li>
+            
+            
+        </ul>
+
+        <strong>Retención (Chargeback):</strong> Se aplica una retención del <span class="note-highlight">15%</span> para chargeback en toda venta de planes (activación o renovación) masivos o empresariales, excepto planes SIMPLES y SIMPLES PLUS (masivos y empresariales).<br>
+        NOTA: Se hará la devolución de este 15% posterior a 6 meses, siempre y cuando estas líneas no hayan incurrido en Chargeback <br><br>
+
+
+        <li>Si el personal entra hasta el día 15 del mes, este se tomará como 1er mes y proporcional para logro de cuotas</li>
+        <li>Si el personal entra posterior al día 15 del mes, este se tomará como mes cero y proporcinal para logro de cuotas</li><br>
+        
+        <li><strong>RECALCULO:</strong> El recálculo se paga a fin de mes, siempre y cuándo hayan cumplido su cuota mensual (sólo cuentan para cuota los planes básicos y plus). Y aplica únicamente para los planes que no habían sido pagados al factor correspondiente en el cálculo semanal dependiendo del mes de entrenamiento en el que se encuentre el ejecutivo.</li>
+        <li>Si el Ejecutivo tiene un logro mayor a su mes correspondiente, se pagará al factor del mes logrado.</li>
+    </div>
+</div>
+
+<script>
+    // Define las ciudades donde los planes de 18/24 meses NO cuentan (0.0)
+    const lowQuotaCities = ["MEXICALI", "ENSENADA", "MONTERREY", "SALTILLO"]; 
+
+    function updateBasePay() {
+        const selector = document.getElementById('citySelector');
+        const selectedOption = selector.options[selector.selectedIndex];
+        
+        // --- 1. Lógica de Pago Base ---
+        const pay = parseFloat(selectedOption.getAttribute('data-pay')) || 0.00;
+        
+        const formatter = new Intl.NumberFormat('es-MX', {
+            style: 'currency',
+            currency: 'MXN',
+            minimumFractionDigits: 2
+        });
+        
+        document.getElementById('basePayDisplay').innerText = formatter.format(pay);
+
+        // --- 2. Lógica de Regla Dinámica (Planes 18/24 meses) ---
+        const city = selectedOption.value; // Obtiene el nombre de la ciudad
+        const ruleElement = document.getElementById('simplePlusRuleDisplay');
+        let ruleText = "";
+        let ruleClass = "note-highlight";
+
+        if (city === "") {
+            ruleText = "Seleccione una ciudad para ver la regla de conteo.";
+            ruleClass = "";
+        } else if (lowQuotaCities.includes(city)) {
+            ruleText = "NO suman para ningún logro de cuota (0.0).";
+        } else {
+            // Regiones restantes (Puebla, CDMX, Veracruz, GDL, Tijuana)
+            ruleText = "Cuentan a 0.5 para el logro de cuota.";
+        }
+
+        ruleElement.innerText = ruleText;
+        ruleElement.className = ruleClass;
+    }
+
+    // Inicializar el display al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('basePayDisplay').innerText = '$0.00';
+    });
+</script>
+
+</body>
+</html>
