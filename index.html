@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tablero Informativo de Comisiones AT&T</title>
+    <title>Portal de Comisiones AT&T (Info + Calculadora)</title>
     <style>
+        /* --- ESTILOS GENERALES Y VARIABLES --- */
         :root {
             --att-blue: #00A8E0;
             --att-dark: #0073AE;
             --light-gray: #f4f4f4;
             --att-gray: #666;
+            --success: #28a745;
+            --danger: #dc3545;
         }
 
         body {
@@ -20,6 +23,60 @@
             color: #333;
         }
 
+        /* --- ESTILOS DEL MENÚ PRINCIPAL (NUEVO) --- */
+        .main-menu {
+            max-width: 900px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-menu-btn {
+            padding: 15px 30px;
+            border: none;
+            background-color: #f0f0f0;
+            color: var(--att-gray);
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-menu-btn:hover {
+            background-color: #e6f7fc;
+            color: var(--att-dark);
+        }
+
+        .main-menu-btn.active-view {
+            background-color: var(--att-dark);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 115, 174, 0.4);
+        }
+
+        /* --- CONTENEDORES DE VISTAS --- */
+        #view-info, #view-calc {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden-view {
+            display: none !important;
+        }
+
+        /* --- ESTILOS DE COMPLETO.HTML (INFO) --- */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -50,7 +107,6 @@
             font-size: 32px;
         }
 
-        /* ESTILOS DE LOS BOTONES DE NAVEGACIÓN */
         .nav-buttons {
             display: flex;
             gap: 15px;
@@ -81,12 +137,10 @@
             box-shadow: 0 4px 6px rgba(0, 168, 224, 0.3);
         }
 
-        /* CLASE PARA OCULTAR SECCIONES */
         .hidden-section {
             display: none;
         }
 
-        /* ESTILOS ORIGINALES */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -97,24 +151,28 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
-            .nav-buttons {
+            .nav-buttons, .main-menu {
                 flex-direction: column;
             }
-            .nav-btn {
+            .nav-btn, .main-menu-btn {
                 width: 100%;
                 text-align: center;
+                justify-content: center;
             }
         }
         
         .form-group {
             margin-bottom: 15px;
         }
+        
+        /* Select genérico ajustado para ambos */
         select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         .result-display {
             background-color: var(--att-dark);
             color: white;
@@ -187,302 +245,647 @@
         .rules-list li {
             margin-bottom: 5px;
         }
+
+        /* --- ESTILOS DE CALCULADORA2.HTML --- */
+        .calc-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .scheme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #eef9fd;
+            border-radius: 8px;
+        }
+
+        .control-group { display: flex; flex-direction: column; gap: 5px; }
+        label { font-weight: bold; font-size: 14px; }
+        
+        .add-sale-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        button.add-btn {
+            background-color: var(--att-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        button.add-btn:hover { background-color: var(--att-dark); }
+
+        .delete-btn { color: white; background-color: var(--danger); border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+
+        .totals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .total-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 5px solid var(--att-blue);
+        }
+
+        .total-card h3 { margin: 0 0 10px 0; font-size: 16px; color: #666; }
+        .total-card .total-value { font-size: 24px; font-weight: bold; color: var(--att-dark); }
+        .sub-value { font-size: 12px; color: #888; }
+        
+        .final-payout { 
+            background-color: var(--att-dark);
+            color: white;
+            border-left: 5px solid var(--success);}
+        .final-payout .total-value { color: white; }
+        .final-payout h3 { color: #e0e0e0; }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div class="logo">AT&T</div>
-        <h1>Esquemas de Comisiones</h1>
-    </header>
-
-    <div class="nav-buttons">
-        <button class="nav-btn active" onclick="switchScheme('entrenamiento', this)">Esquema Entrenamiento</button>
-        <button class="nav-btn" onclick="switchScheme('rentas', this)">Esquema Rentas</button>
+    <div class="main-menu">
+        <button id="btn-info" class="main-menu-btn active-view" onclick="toggleMainView('info')">
+            📋 Información y Reglas
+        </button>
+        <button id="btn-calc" class="main-menu-btn" onclick="toggleMainView('calc')">
+            🧮 Calculadora
+        </button>
     </div>
 
-    <div id="entrenamiento-section">
-        <div class="info-grid">
-            <div>
-                <h2>1. Pago Semanal Base (Garantía) 📍</h2>
-                <p>El pago semanal fijo se asigna según la Región del vendedor.</p>
-                <p>Selecciona tu ciudad para confirmar el pago semanal:</p>
-    
-                <div class="form-group">
-                    <label for="citySelector">Ciudad de Operación:</label>
-                    <select id="citySelector" onchange="updateBasePay()">
-                        <option value="" data-pay="0" disabled selected>--- Seleccionar ---</option>
-                        <option value="PUEBLA" data-pay="2000">PUEBLA</option>
-                        <option value="CDMX" data-pay="2000">CDMX</option>
-                        <option value="VERACRUZ" data-pay="2000">VERACRUZ</option>
-                        <option value="GUADALAJARA" data-pay="2000">GUADALAJARA</option>
-                        <option value="TIJUANA" data-pay="2000">TIJUANA</option>
-                        <option value="MONTERREY" data-pay="2500">MONTERREY</option>
-                        <option value="SALTILLO" data-pay="2500">SALTILLO</option>
-                        <option value="ENSENADA" data-pay="3000">ENSENADA</option>
-                        <option value="MEXICALI" data-pay="3000">MEXICALI</option>
-                    </select>
+    <div id="view-info">
+        <div class="container">
+            <header>
+                <div class="logo">AT&T</div>
+                <h1>Esquemas de Comisiones</h1>
+            </header>
+        
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="switchScheme('entrenamiento', this)">Esquema Entrenamiento</button>
+                <button class="nav-btn" onclick="switchScheme('rentas', this)">Esquema Rentas</button>
+            </div>
+        
+            <div id="entrenamiento-section">
+                <div class="info-grid">
+                    <div>
+                        <h2>1. Pago Semanal Base (Garantía) 📍</h2>
+                        <p>El pago semanal fijo se asigna según la Región del vendedor.</p>
+                        <p>Selecciona tu ciudad para confirmar el pago semanal:</p>
+            
+                        <div class="form-group">
+                            <label for="citySelector">Ciudad de Operación:</label>
+                            <select id="citySelector" onchange="updateBasePay()">
+                                <option value="" data-pay="0" disabled selected>--- Seleccionar ---</option>
+                                <option value="PUEBLA" data-pay="2000">PUEBLA</option>
+                                <option value="CDMX" data-pay="2000">CDMX</option>
+                                <option value="VERACRUZ" data-pay="2000">VERACRUZ</option>
+                                <option value="GUADALAJARA" data-pay="2000">GUADALAJARA</option>
+                                <option value="TIJUANA" data-pay="2000">TIJUANA</option>
+                                <option value="MONTERREY" data-pay="2500">MONTERREY</option>
+                                <option value="SALTILLO" data-pay="2500">SALTILLO</option>
+                                <option value="ENSENADA" data-pay="3000">ENSENADA</option>
+                                <option value="MEXICALI" data-pay="3000">MEXICALI</option>
+                            </select>
+                        </div>
+                        
+                        <div class="result-display">
+                            <div>Pago Semanal:</div>
+                            <div class="result-value" id="basePayDisplay">$0.00</div>
+                        </div>
+                    </div>
+            
+                    <div>
+                        <h2>2. Cuotas y Factor de Pago 📈</h2>
+                        <p>La meta y el factor para pago de comisión dependen de la antigüedad del vendedor (curva de aprendizaje) y tipo de plan.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="color: #00A8E0;"> _______</th>
+                                    <th>Meta Mensual (Act.)</th>
+                                    <th>Meta Semanal (Act.)</th>
+                                    <th>Factor Activaciones (PLUS)</th>
+                                    <th>Factor Activaciones (BÁSICO)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mes 1</td>
+                                    <td>4 Activaciones</td>
+                                    <td><span class="note-highlight">1</span> Act.</td>
+                                    <td><span class="note-highlight">1.0 X</span></td>
+                                    <td><span class="note-highlight">0.5 X</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Mes 2</td>
+                                    <td>6 Activaciones</td>
+                                    <td><span class="note-highlight">1.5</span> Act.</td>
+                                    <td><span class="note-highlight">1.2 X</span></td>
+                                    <td><span class="note-highlight">0.5 X</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Mes 3</td>
+                                    <td>8 Activaciones</td>
+                                    <td><span class="note-highlight">2</span> Act.</td>
+                                    <td><span class="note-highlight">1.5 X</span></td>
+                                    <td><span class="note-highlight">0.5 X</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        
+                <div class="bonus-note">
+                    <p>Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span> (sin importar el mes).</p>
+                    <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                    <ol>
+                        <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li><br>
+                        <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span> Y tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                    </ol>
                 </div>
                 
-                <div class="result-display">
-                    <div>Pago Semanal:</div>
-                    <div class="result-value" id="basePayDisplay">$0.00</div>
+                <div class="rules-section">
+                    <hr>
+                    <h2>3. Definiciones de Planes y Reglas de Cuota ℹ️</h2>
+            
+                    <h3>Definiciones de Planes y Factor Básico</h3>
+                    <p>Las comisiones se pagan semanalmente siempre y cuándo lleguen a su cuota semanal</p>
+                    <ul class="rules-list">
+                        <li><strong>BÁSICO:</strong> AZUL 1, LITE 1 (Con y sin equipo).</li>
+                        <li><strong>PLUS:</strong> AZUL 2, AZUL 3, PLATA, ORO, BLACK, TITANIO, DIAMANTE, LITE 2, LITE 3, LITE 4, LITE 5, LITE 6, LITE 7 (Con y sin equipo).</li>
+                        <li>Los planes Azul 1 y LITE 1 tienen como logro de cuota un valor de <span class="note-highlight">0.5</span>.</li>
+                    </ul>
+            
+                    <h3>Reglas de Planes Simples / Simple Plus</h3>
+                    <ul class="rules-list">
+                        <li><strong>PLANES SIMPLES - SIMPLE PLUS (MASIVO) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">0.5X</span>.</li>
+                        <li><strong>PLANES SIMPLES - SIMPLE PLUS (EMPRESARIAL) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">1X</span>.</li>
+                        <li>
+                            <strong>Planes SIMPLES/PLUS de 18 y 24 meses (Masivo y Empresarial):</strong> 
+                            <span id="simplePlusRuleDisplay" class="note-highlight" style="margin-left: 10px;">Seleccione su ciudad para ver la regla de conteo.</span>
+                        </li>
+                    </ul>
+            
+                    <strong>Retención (Chargeback):</strong> Se aplica una retención del <span class="note-highlight">15%</span> para chargeback en toda venta de planes (activación o renovación) masivos o empresariales, excepto planes SIMPLES y SIMPLES PLUS (masivos y empresariales).<br>
+                    NOTA: Se hará la devolución de este 15% posterior a 6 meses, siempre y cuando estas líneas no hayan incurrido en Chargeback <br><br>
+            
+                    <li>Si el personal entra hasta el día 15 del mes, este se tomará como 1er mes y proporcional para logro de cuotas</li>
+                    <li>Si el personal entra posterior al día 15 del mes, este se tomará como mes cero y proporcinal para logro de cuotas</li><br>
+                    
+                    <li><strong>RECALCULO:</strong> El recálculo se paga a fin de mes, siempre y cuándo hayan cumplido su cuota mensual (sólo cuentan para cuota los planes básicos y plus). Y aplica únicamente para los planes que no habían sido pagados al factor correspondiente en el cálculo semanal dependiendo del mes de entrenamiento en el que se encuentre el ejecutivo.</li>
+                    <li>Si el Ejecutivo tiene un logro mayor a su mes correspondiente, se pagará al factor del mes logrado.</li>
                 </div>
             </div>
-    
-            <div>
-                <h2>2. Cuotas y Factor de Pago 📈</h2>
-                <p>La meta y el factor para pago de comisión dependen de la antigüedad del vendedor (curva de aprendizaje) y tipo de plan.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="color: #00A8E0;"> _______</th>
-                            <th>Meta Mensual (Act.)</th>
-                            <th>Meta Semanal (Act.)</th>
-                            <th>Factor Activaciones (PLUS)</th>
-                            <th>Factor Activaciones (BÁSICO)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Mes 1</td>
-                            <td>4 Activaciones</td>
-                            <td><span class="note-highlight">1</span> Act.</td>
-                            <td><span class="note-highlight">1.0 X</span></td>
-                            <td><span class="note-highlight">0.5 X</span></td>
-                        </tr>
-                        <tr>
-                            <td>Mes 2</td>
-                            <td>6 Activaciones</td>
-                            <td><span class="note-highlight">1.5</span> Act.</td>
-                            <td><span class="note-highlight">1.2 X</span></td>
-                            <td><span class="note-highlight">0.5 X</span></td>
-                        </tr>
-                        <tr>
-                            <td>Mes 3</td>
-                            <td>8 Activaciones</td>
-                            <td><span class="note-highlight">2</span> Act.</td>
-                            <td><span class="note-highlight">1.5 X</span></td>
-                            <td><span class="note-highlight">0.5 X</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="rentas-section" class="hidden-section">
+                <div class="rules-section" style="padding-top: 0;">
+                    <h2>1. Esquema de Rentas 📊</h2>
+                    <p>Este esquema aplica para ejecutivos en la modalidad de Rentas. La base y factores se calculan por volumen de activaciones semanales.</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="background-color: #0073AE;">Activaciones</th>
+                                <th>Categoría</th>
+                                <th>Base Semanal</th>
+                                <th>Factor Básico</th>
+                                <th>Factor Plus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1 Activación</strong> </td>
+                                <td><strong>CAT-1</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$500</td>
+                                <td><span class="note-highlight">0 X</span></td>
+                                <td><span class="note-highlight">0 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>2 Activaciones</strong></td>
+                                <td><strong>CAT-2</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$800</td>
+                                <td><span class="note-highlight">0 X</span></td>
+                                <td><span class="note-highlight">0 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>3 Activaciones</strong></td>
+                                <td><strong>CAT-3</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$1,000</td>
+                                <td><span class="note-highlight">0.5 X</span></td>
+                                <td><span class="note-highlight">1.0 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>4 Activaciones</strong></td>
+                                <td><strong>CAT-4</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$1,200</td>
+                                <td><span class="note-highlight">0.5 X</span></td>
+                                <td><span class="note-highlight">1.2 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>5 y 6 Activaciones</strong></td>
+                                <td><strong>CAT-5</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$1,500</td>
+                                <td><span class="note-highlight">1.0 X</span></td>
+                                <td><span class="note-highlight">1.5 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>7 y 8 Activaciones</strong></td>
+                                <td><strong>CAT-7</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$2,000</td>
+                                <td><span class="note-highlight">1.0 X</span></td>
+                                <td><span class="note-highlight">1.5 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>+9 Activaciones</strong></td>
+                                <td><strong>CAT-9</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$2,500</td>
+                                <td><span class="note-highlight">1.0 X</span></td>
+                                <td><span class="note-highlight">1.5 X</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bonus-note">
+                    <p>Pago Semanal de Renovaciones a <span class="note-highlight">1.0X</span> (Estas no suman para logro de cuota de activaciones)</p>
+                    <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                    <ol>
+                        <li>Si tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                    </ol>
+                </div>
+                
+                <div class="rules-section">
+                    <hr>
+                    <h2>2. Definiciones de Planes y Reglas de Cuota ℹ️</h2>
+            
+                    <h3>Definiciones de Planes y Factor Básico</h3>
+                    <p>Las comisiones se pagan semanalmente dependiendo de su logro</p>
+                    <p>Si el ejecutivo tiene solo una activacion en la semana, se paga $500 como apoyo y es valido solo una vez al mes</p>
+                    <ul class="rules-list">
+                        <li><strong>BÁSICO:</strong> AZUL 1, LITE 1 (Con y sin equipo).</li>
+                        <li><strong>PLUS:</strong> AZUL 2, AZUL 3, PLATA, ORO, BLACK, TITANIO, DIAMANTE, LITE 2, LITE 3, LITE 4, LITE 5, LITE 6, LITE 7 (Con y sin equipo).</li>
+                        <li>Los planes Azul 1 y LITE 1 <strong>con equipo</strong> tienen como logro de cuota un valor de <span class="note-highlight">1</span>.</li>
+                        <li>Los planes Azul 1 y LITE 1 <strong>sin equipo</strong> tienen como logro de cuota un valor de <span class="note-highlight">0.5</span>.</li>
+                    </ul>
+            
+                    <h3>Reglas de Planes Simples / Simple Plus</h3>
+                    <ul class="rules-list">
+                        <li><strong>PLANES SIMPLES - SIMPLE PLUS (MASIVO) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">0.5X</span>.</li>
+                        <li><strong>PLANES SIMPLES - SIMPLE PLUS (EMPRESARIAL) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">1X</span>.</li>
+                        <li>
+                            <strong>Planes SIMPLES/PLUS de 18 y 24 meses (Masivo y Empresarial):</strong> <span class="note-highlight">Cuentan a 1 para logro de cuota</span> 
+                        </li>
+                    </ul>
+            
+                    <strong>Retención (Chargeback):</strong> Se aplica una retención del <span class="note-highlight">15%</span> para chargeback en toda venta de planes (activación o renovación) masivos o empresariales, excepto planes SIMPLES y SIMPLES PLUS (masivos y empresariales).<br>
+                    NOTA: Se hará la devolución de este 15% posterior a 6 meses, siempre y cuando estas líneas no hayan incurrido en Chargeback <br><br>
+            
+                    
+                    <li><strong>RECALCULO:</strong> El recálculo se paga a fin de mes, siempre y cuándo hayan cumplido su cuota mensual de 20 activaciones con fecha facturación del 1 al 30 (o 31) del mes.(sólo cuentan para cuota de recalculo los planes básicos y plus). Y aplica únicamente para los planes que no habían sido pagados al factor Basicos 1X y Plus 1.5X.</li>
+                </div>
             </div>
         </div>
-
-        <div class="bonus-note">
-            <p>Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span> (sin importar el mes).</p>
-            <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
-            <ol>
-                <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li><br>
-                <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span> Y tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
-            </ol>
-        </div>
-        
-        <div class="rules-section">
-            <hr>
-            <h2>3. Definiciones de Planes y Reglas de Cuota ℹ️</h2>
-    
-            <h3>Definiciones de Planes y Factor Básico</h3>
-            <p>Las comisiones se pagan semanalmente siempre y cuándo lleguen a su cuota semanal</p>
-            <ul class="rules-list">
-                <li><strong>BÁSICO:</strong> AZUL 1, LITE 1 (Con y sin equipo).</li>
-                <li><strong>PLUS:</strong> AZUL 2, AZUL 3, PLATA, ORO, BLACK, TITANIO, DIAMANTE, LITE 2, LITE 3, LITE 4, LITE 5, LITE 6, LITE 7 (Con y sin equipo).</li>
-                <li>Los planes Azul 1 y LITE 1 tienen como logro de cuota un valor de <span class="note-highlight">0.5</span>.</li>
-            </ul>
-    
-            <h3>Reglas de Planes Simples / Simple Plus</h3>
-            <ul class="rules-list">
-                <li><strong>PLANES SIMPLES - SIMPLE PLUS (MASIVO) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">0.5X</span>.</li>
-                <li><strong>PLANES SIMPLES - SIMPLE PLUS (EMPRESARIAL) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">1X</span>.</li>
-                <li>
-                    <strong>Planes SIMPLES/PLUS de 18 y 24 meses (Masivo y Empresarial):</strong> 
-                    <span id="simplePlusRuleDisplay" class="note-highlight" style="margin-left: 10px;">Seleccione su ciudad para ver la regla de conteo.</span>
-                </li>
-            </ul>
-    
-            <strong>Retención (Chargeback):</strong> Se aplica una retención del <span class="note-highlight">15%</span> para chargeback en toda venta de planes (activación o renovación) masivos o empresariales, excepto planes SIMPLES y SIMPLES PLUS (masivos y empresariales).<br>
-            NOTA: Se hará la devolución de este 15% posterior a 6 meses, siempre y cuando estas líneas no hayan incurrido en Chargeback <br><br>
-    
-            <li>Si el personal entra hasta el día 15 del mes, este se tomará como 1er mes y proporcional para logro de cuotas</li>
-            <li>Si el personal entra posterior al día 15 del mes, este se tomará como mes cero y proporcinal para logro de cuotas</li><br>
-            
-            <li><strong>RECALCULO:</strong> El recálculo se paga a fin de mes, siempre y cuándo hayan cumplido su cuota mensual (sólo cuentan para cuota los planes básicos y plus). Y aplica únicamente para los planes que no habían sido pagados al factor correspondiente en el cálculo semanal dependiendo del mes de entrenamiento en el que se encuentre el ejecutivo.</li>
-            <li>Si el Ejecutivo tiene un logro mayor a su mes correspondiente, se pagará al factor del mes logrado.</li>
-        </div>
     </div>
-    <!-- ***********RENTAS******** -->
-    <div id="rentas-section" class="hidden-section">
-        <div class="rules-section" style="padding-top: 0;">
-            <h2>1. Esquema de Rentas 📊</h2>
-            <p>Este esquema aplica para ejecutivos en la modalidad de Rentas. La base y factores se calculan por volumen de activaciones semanales.</p>
-            
-            <table>
+
+    <div id="view-calc" class="hidden-view">
+        <div class="calc-container">
+            <h1>Calculadora de Comisiones</h1>
+        
+            <div class="scheme-selector">
+                <div class="control-group">
+                    <label>1. Elige Esquema:</label>
+                    <select id="schemeSelect" onchange="toggleSchemeInputs()">
+                        <option value="entrenamiento">Entrenamiento</option>
+                        <option value="rentas">Rentas</option>
+                    </select>
+                </div>
+        
+                <div class="control-group" id="trainingInputs">
+                    <label>Ciudad:</label>
+                    <select id="citySelect" onchange="calculate()">
+                        <option value="2000">PUEBLA / CDMX / GDL / VERACRUZ </option>
+                        <option value="2500">MONTERREY / SALTILLO </option>
+                        <option value="3000">ENSENADA / MEXICALI </option>
+                    </select>
+                </div>
+                <div class="control-group" id="monthInputs">
+                    <label>Mes de Antigüedad:</label>
+                    <select id="monthSelect" onchange="calculate()">
+                        <option value="1">Mes 1 (Meta 4)</option>
+                        <option value="2">Mes 2 (Meta 6)</option>
+                        <option value="3">Mes 3 (Meta 8)</option>
+                    </select>
+                </div>
+            </div>
+        
+            <div class="add-sale-area">
+                <div class="control-group">
+                    <label>Plan:</label>
+                    <select id="planSelect"></select>
+                </div>
+                
+                <div class="control-group">
+                    <label>Tipo de Trámite:</label>
+                    <select id="typeSelect">
+                        <option value="activacion">Activación</option>
+                        <option value="renovacion">Renovación</option>
+                    </select>
+                </div>
+        
+                <div class="control-group">
+                    <label>¿Con Equipo?</label>
+                    <select id="deviceSelect">
+                        <option value="si">Con Equipo</option>
+                        <option value="no">Sin Equipo</option>
+                    </select>
+                </div>
+        
+                <button class="add-btn" onclick="addSale()">+ Agregar Venta</button>
+            </div>
+        
+            <table id="salesTable">
                 <thead>
                     <tr>
-                        <th style="background-color: #0073AE;">Activaciones</th>
-                        <th>Categoría</th>
-                        <th>Base Semanal</th>
-                        <th>Factor Básico</th>
-                        <th>Factor Plus</th>
+                        <th>Plan</th>
+                        <th>Tipo</th>
+                        <th>Equipo</th>
+                        <th>Factor</th>
+                        <th>Comisión</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>1 Activación</strong> </td>
-                        <td><strong>CAT-1</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$500</td>
-                        <td><span class="note-highlight">0 X</span></td>
-                        <td><span class="note-highlight">0 X</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>2 Activaciones</strong></td>
-                        <td><strong>CAT-2</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$800</td>
-                        <td><span class="note-highlight">0 X</span></td>
-                        <td><span class="note-highlight">0 X</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>3 Activaciones</strong></td>
-                        <td><strong>CAT-3</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$1,000</td>
-                        <td><span class="note-highlight">0.5 X</span></td>
-                        <td><span class="note-highlight">1.0 X</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>4 Activaciones</strong></td>
-                        <td><strong>CAT-4</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$1,200</td>
-                        <td><span class="note-highlight">0.5 X</span></td>
-                        <td><span class="note-highlight">1.2 X</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>5 y 6 Activaciones</strong></td>
-                        <td><strong>CAT-5</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$1,500</td>
-                        <td><span class="note-highlight">1.0 X</span></td>
-                        <td><span class="note-highlight">1.5 X</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>7 y 8 Activaciones</strong></td>
-                        <td><strong>CAT-7</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$2,000</td>
-                        <td><span class="note-highlight">1.0 X</span></td>
-                        <td><span class="note-highlight">1.5 X</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>+9 Activaciones</strong></td>
-                        <td><strong>CAT-9</strong></td>
-                        <td class="result-value" style="font-size: 16px;">$2,500</td>
-                        <td><span class="note-highlight">1.0 X</span></td>
-                        <td><span class="note-highlight">1.5 X</span></td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
-        </div>
-        <div class="bonus-note">
-            <p>Pago Semanal de Renovaciones a <span class="note-highlight">1.0X</span> (Estas no suman para logro de cuota de activaciones)</p>
-            <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
-            <ol>
-                <li>Si tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
-            </ol>
-        </div>
         
-        <div class="rules-section">
-            <hr>
-            <h2>2. Definiciones de Planes y Reglas de Cuota ℹ️</h2>
-    
-            <h3>Definiciones de Planes y Factor Básico</h3>
-            <p>Las comisiones se pagan semanalmente dependiendo de su logro</p>
-            <p>Si el ejecutivo tiene solo una activacion en la semana, se paga $500 como apoyo y es valido solo una vez al mes</p>
-            <ul class="rules-list">
-                <li><strong>BÁSICO:</strong> AZUL 1, LITE 1 (Con y sin equipo).</li>
-                <li><strong>PLUS:</strong> AZUL 2, AZUL 3, PLATA, ORO, BLACK, TITANIO, DIAMANTE, LITE 2, LITE 3, LITE 4, LITE 5, LITE 6, LITE 7 (Con y sin equipo).</li>
-                <li>Los planes Azul 1 y LITE 1 <strong>con equipo</strong> tienen como logro de cuota un valor de <span class="note-highlight">1</span>.</li>
-                <li>Los planes Azul 1 y LITE 1 <strong>sin equipo</strong> tienen como logro de cuota un valor de <span class="note-highlight">0.5</span>.</li>
-            </ul>
-    
-            <h3>Reglas de Planes Simples / Simple Plus</h3>
-            <ul class="rules-list">
-                <li><strong>PLANES SIMPLES - SIMPLE PLUS (MASIVO) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">0.5X</span>.</li>
-                <li><strong>PLANES SIMPLES - SIMPLE PLUS (EMPRESARIAL) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">1X</span>.</li>
-                <li>
-                    <strong>Planes SIMPLES/PLUS de 18 y 24 meses (Masivo y Empresarial):</strong> <span class="note-highlight">Cuentan a 1 para logro de cuota</span> 
-                </li>
-            </ul>
-    
-            <strong>Retención (Chargeback):</strong> Se aplica una retención del <span class="note-highlight">15%</span> para chargeback en toda venta de planes (activación o renovación) masivos o empresariales, excepto planes SIMPLES y SIMPLES PLUS (masivos y empresariales).<br>
-            NOTA: Se hará la devolución de este 15% posterior a 6 meses, siempre y cuando estas líneas no hayan incurrido en Chargeback <br><br>
-    
-            
-            <li><strong>RECALCULO:</strong> El recálculo se paga a fin de mes, siempre y cuándo hayan cumplido su cuota mensual de 20 activaciones con fecha facturación del 1 al 30 (o 31) del mes.(sólo cuentan para cuota de recalculo los planes básicos y plus). Y aplica únicamente para los planes que no habían sido pagados al factor Basicos 1X y Plus 1.5X.</li>
+            <div class="totals-grid">
+                <div class="total-card">
+                    <h3>Logro Cuota (Activaciones)</h3>
+                    <div class="total-value" id="quotaValue">0.0</div>
+                    <div class="sub-value" id="quotaStatus">Semana en curso</div>
+                </div>
+                <div class="total-card">
+                    <h3>Base Semanal</h3>
+                    <div class="total-value" id="basePayValue">$0.00</div><br>
+                    <div class="sub-value" id="basePayLabel">Fijo por ciudad</div>
+                </div>
+                <div class="total-card">
+                    <h3>Comisiones Brutas</h3>
+                    <div class="total-value" id="grossCommValue">$0.00</div><br>
+                    <div class="sub-value">Suma (Precio Plan x Factor)</div>
+                </div>
+                <div class="total-card">
+                    <h3>Retención (15%)</h3>
+                    <div class="total-value" id="retentionValue" style="color: var(--danger);">$0.00</div><br>
+                    <div class="sub-value">Fondo de garantía Chargeback</div>
+                </div>
+                <div class="total-card final-payout">
+                    <h3>TOTAL A PAGAR</h3>
+                    <div class="total-value" id="finalPayoutValue">$0.00</div><br>
+                    <div class="sub-value"><strong>Base + (Comisión - Retención)</strong></div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
 
-<script>
-    // --- LÓGICA DE NAVEGACIÓN (TABS) ---
-    function switchScheme(scheme, btn) {
-        // 1. Ocultar todas las secciones
-        document.getElementById('entrenamiento-section').style.display = 'none';
-        document.getElementById('rentas-section').style.display = 'none';
+    <script>
+        // --- 1. LÓGICA DE CONTROL DE VISTAS PRINCIPALES ---
+        function toggleMainView(viewId) {
+            const infoView = document.getElementById('view-info');
+            const calcView = document.getElementById('view-calc');
+            const btnInfo = document.getElementById('btn-info');
+            const btnCalc = document.getElementById('btn-calc');
 
-        // 2. Mostrar la seleccionada
-        document.getElementById(scheme + '-section').style.display = 'block';
-
-        // 3. Actualizar estado visual de los botones
-        const buttons = document.querySelectorAll('.nav-btn');
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-    }
-
-
-    // --- LÓGICA ORIGINAL DE ENTRENAMIENTO ---
-    
-    // Define las ciudades donde los planes de 18/24 meses NO cuentan (0.0)
-    const lowQuotaCities = ["MEXICALI", "ENSENADA", "MONTERREY", "SALTILLO"]; 
-
-    function updateBasePay() {
-        const selector = document.getElementById('citySelector');
-        const selectedOption = selector.options[selector.selectedIndex];
-        
-        // --- 1. Lógica de Pago Base ---
-        const pay = parseFloat(selectedOption.getAttribute('data-pay')) || 0.00;
-        
-        const formatter = new Intl.NumberFormat('es-MX', {
-            style: 'currency',
-            currency: 'MXN',
-            minimumFractionDigits: 2
-        });
-        
-        document.getElementById('basePayDisplay').innerText = formatter.format(pay);
-
-        // --- 2. Lógica de Regla Dinámica (Planes 18/24 meses) ---
-        const city = selectedOption.value; // Obtiene el nombre de la ciudad
-        const ruleElement = document.getElementById('simplePlusRuleDisplay');
-        let ruleText = "";
-        let ruleClass = "note-highlight";
-
-        if (city === "") {
-            ruleText = "Seleccione una ciudad para ver la regla de conteo.";
-            ruleClass = "";
-        } else if (lowQuotaCities.includes(city)) {
-            ruleText = "NO suman para ningún logro de cuota (0.0).";
-        } else {
-            // Regiones restantes (Puebla, CDMX, Veracruz, GDL, Tijuana)
-            ruleText = "Cuentan a 0.5 para el logro de cuota.";
+            if(viewId === 'info') {
+                infoView.classList.remove('hidden-view');
+                calcView.classList.add('hidden-view');
+                btnInfo.classList.add('active-view');
+                btnCalc.classList.remove('active-view');
+            } else {
+                infoView.classList.add('hidden-view');
+                calcView.classList.remove('hidden-view');
+                btnInfo.classList.remove('active-view');
+                btnCalc.classList.add('active-view');
+            }
         }
 
-        ruleElement.innerText = ruleText;
-        ruleElement.className = ruleClass;
-    }
+        // --- 2. LÓGICA DE COMPLETO.HTML (INFO) ---
+        function switchScheme(scheme, btn) {
+            // 1. Ocultar todas las secciones
+            document.getElementById('entrenamiento-section').style.display = 'none';
+            document.getElementById('rentas-section').style.display = 'none';
 
-    // Inicializar el display al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('basePayDisplay').innerText = '$0.00';
-    });
-</script>
+            // 2. Mostrar la seleccionada
+            document.getElementById(scheme + '-section').style.display = 'block';
 
+            // 3. Actualizar estado visual de los botones
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        const lowQuotaCities = ["MEXICALI", "ENSENADA", "MONTERREY", "SALTILLO"]; 
+
+        function updateBasePay() {
+            const selector = document.getElementById('citySelector');
+            const selectedOption = selector.options[selector.selectedIndex];
+            
+            // --- 1. Lógica de Pago Base ---
+            const pay = parseFloat(selectedOption.getAttribute('data-pay')) || 0.00;
+            
+            const formatter = new Intl.NumberFormat('es-MX', {
+                style: 'currency',
+                currency: 'MXN',
+                minimumFractionDigits: 2
+            });
+            
+            document.getElementById('basePayDisplay').innerText = formatter.format(pay);
+
+            // --- 2. Lógica de Regla Dinámica (Planes 18/24 meses) ---
+            const city = selectedOption.value; // Obtiene el nombre de la ciudad
+            const ruleElement = document.getElementById('simplePlusRuleDisplay');
+            let ruleText = "";
+            let ruleClass = "note-highlight";
+
+            if (city === "") {
+                ruleText = "Seleccione una ciudad para ver la regla de conteo.";
+                ruleClass = "";
+            } else if (lowQuotaCities.includes(city)) {
+                ruleText = "NO suman para ningún logro de cuota (0.0).";
+            } else {
+                // Regiones restantes (Puebla, CDMX, Veracruz, GDL, Tijuana)
+                ruleText = "Cuentan a 0.5 para el logro de cuota.";
+            }
+
+            ruleElement.innerText = ruleText;
+            ruleElement.className = ruleClass;
+        }
+
+        // --- 3. LÓGICA DE CALCULADORA2.HTML (CALCULADORA) ---
+        const plansDB = [
+            { name: "AT&T AZUL 1", price: 266.9902913, category: "BASIC" },
+            { name: "ATT LITE 1", price: 283.7294945, category: "BASIC" },
+            { name: "AT&T AZUL 2", price: 350.6863073, category: "PLUS" },
+            { name: "AT&T AZUL 3", price: 442.751925, category: "PLUS" },
+            { name: "AT&T PLATA", price: 526.4479411, category: "PLUS" },
+            { name: "AT&T ORO", price: 585.0351523, category: "PLUS" },
+            { name: "AT&T BLACK", price: 668.7311684, category: "PLUS" },
+            { name: "AT&T TITANIO", price: 668.7311684, category: "PLUS" },
+            { name: "AT&T PLATINO", price: 836.1232005, category: "PLUS" },
+            { name: "AT&T DIAMANTE", price: 1053.732842, category: "PLUS" },
+            { name: "ATT LITE 2", price: 367.4255105, category: "PLUS" },
+            { name: "ATT LITE 3", price: 451.1215266, category: "PLUS" },
+            { name: "ATT LITE 4", price: 543.1871443, category: "PLUS" },
+            { name: "ATT LITE 5", price: 626.8831604, category: "PLUS" },
+            { name: "ATT LITE 6", price: 836.1232005, category: "PLUS" },
+            { name: "ATT LITE 7", price: 1212.755273, category: "PLUS" }
+        ];
+
+        let sales = [];
+
+        // Inicialización General
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar display de Info
+            const basePayDisp = document.getElementById('basePayDisplay');
+            if(basePayDisp) basePayDisp.innerText = '$0.00';
+
+            // Inicializar Calculadora
+            const select = document.getElementById('planSelect');
+            if(select) {
+                plansDB.forEach((plan, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.text = plan.name; 
+                    select.appendChild(option);
+                });
+            }
+            toggleSchemeInputs();
+        });
+
+        function toggleSchemeInputs() {
+            const scheme = document.getElementById('schemeSelect').value;
+            document.getElementById('trainingInputs').style.display = scheme === 'entrenamiento' ? 'flex' : 'none';
+            document.getElementById('monthInputs').style.display = scheme === 'entrenamiento' ? 'flex' : 'none';
+            calculate();
+        }
+
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(amount);
+        }
+
+        function addSale() {
+            const planIndex = document.getElementById('planSelect').value;
+            const type = document.getElementById('typeSelect').value;
+            const hasDevice = document.getElementById('deviceSelect').value === 'si';
+            const planData = plansDB[planIndex];
+
+            sales.push({ ...planData, type, hasDevice });
+            calculate();
+        }
+
+        function deleteSale(index) {
+            sales.splice(index, 1);
+            calculate();
+        }
+
+        function calculate() {
+            const scheme = document.getElementById('schemeSelect').value;
+            let totalBasePay = 0, totalQuota = 0, totalGrossComm = 0, totalRetention = 0;
+
+            // 1. Calcular Logro de Cuota (Solo Activaciones)
+            sales.forEach(sale => {
+                if (sale.type === 'activacion') {
+                    if (scheme === 'entrenamiento') {
+                        totalQuota += (sale.category === 'BASIC') ? 0.5 : 1.0;
+                    } else {
+                        totalQuota += (sale.category === 'BASIC' && !sale.hasDevice) ? 0.5 : 1.0;
+                    }
+                }
+            });
+
+            // 2. Definir Factores Base
+            let fBasic = 0, fPlus = 0, fRenew = 1.0;
+
+            if (scheme === 'entrenamiento') {
+                totalBasePay = parseFloat(document.getElementById('citySelect').value);
+                const month = parseInt(document.getElementById('monthSelect').value);
+                fBasic = 0.5;
+                fPlus = (month === 1) ? 1.0 : (month === 2) ? 1.2 : 1.5;
+                fRenew = 0.5; // Base renovación entrenamiento
+            } else {
+                // Lógica Rentas (Sueldo base según tabla)
+                if (totalQuota < 1) totalBasePay = 0;
+                else if (totalQuota < 2) totalBasePay = 500;
+                else if (totalQuota < 3) totalBasePay = 800;
+                else if (totalQuota < 4) totalBasePay = 1000;
+                else if (totalQuota < 5) totalBasePay = 1200;
+                else if (totalQuota < 7) totalBasePay = 1500;
+                else if (totalQuota < 9) totalBasePay = 2000;
+                else totalBasePay = 2500;
+
+                // Factores Rentas
+                if (totalQuota >= 3) {
+                    fBasic = (totalQuota >= 5) ? 1.0 : 0.5;
+                    fPlus = (totalQuota >= 5) ? 1.5 : (totalQuota >= 4) ? 1.2 : 1.0;
+                } else { fBasic = 0; fPlus = 0; }
+                fRenew = 1.0; // Base renovación rentas
+            }
+
+            // 3. Renderizar y Calcular Comisiones
+            const tableBody = document.querySelector('#salesTable tbody');
+            tableBody.innerHTML = '';
+            sales.forEach((sale, index) => {
+                let factor = 0;
+                
+                if (sale.type === 'renovacion') {
+                    // REGLA GLOBAL: Renovación sin equipo = Factor 0
+                    if (!sale.hasDevice) factor = 0;
+                    else factor = fRenew;
+                } else {
+                    factor = (sale.category === 'BASIC') ? fBasic : fPlus;
+                }
+
+                const comm = sale.price * factor;
+                const ret = comm * 0.15;
+                totalGrossComm += comm;
+                totalRetention += ret;
+
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${sale.name}</td>
+                        <td>${sale.type.toUpperCase()}</td>
+                        <td>${sale.hasDevice ? 'SI' : 'NO'}</td>
+                        <td><strong>${factor.toFixed(1)} X</strong></td>
+                        <td>${formatMoney(comm)}</td>
+                        <td><button class="delete-btn" onclick="deleteSale(${index})">X</button></td>
+                    </tr>`;
+            });
+
+            // 4. Actualizar Interfaz
+            document.getElementById('quotaValue').innerText = totalQuota;
+            document.getElementById('basePayValue').innerText = formatMoney(totalBasePay);
+            document.getElementById('grossCommValue').innerText = formatMoney(totalGrossComm);
+            document.getElementById('retentionValue').innerText = "-" + formatMoney(totalRetention);
+            document.getElementById('finalPayoutValue').innerText = formatMoney(totalBasePay + totalGrossComm - totalRetention);
+        }
+    </script>
 </body>
 </html>
