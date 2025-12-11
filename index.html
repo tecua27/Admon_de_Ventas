@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Comisiones AT&T (Info + Calculadora)</title>
+    <title>Esquema de Comisiones AT&T</title>
     <style>
         /* --- ESTILOS GENERALES Y VARIABLES --- */
         :root {
@@ -345,6 +345,7 @@
             <div class="nav-buttons">
                 <button class="nav-btn active" onclick="switchScheme('entrenamiento', this)">Esquema Entrenamiento</button>
                 <button class="nav-btn" onclick="switchScheme('rentas', this)">Esquema Rentas</button>
+                <button class="nav-btn" onclick="switchScheme('retencion', this)">Esquema Retención</button>
             </div>
         
             <div id="entrenamiento-section">
@@ -563,6 +564,87 @@
                     <li><strong>RECALCULO:</strong> El recálculo se paga a fin de mes, siempre y cuándo hayan cumplido su cuota mensual de 20 activaciones con fecha facturación del 1 al 30 (o 31) del mes.(sólo cuentan para cuota de recalculo los planes básicos y plus). Y aplica únicamente para los planes que no habían sido pagados al factor Basicos 1X y Plus 1.5X.</li>
                 </div>
             </div>
+            <div id="retencion-section" class="hidden-section">
+                <div class="rules-section" style="padding-top: 0;">
+                    <h2>1. Esquema de Retención 🛡️</h2>
+                    <p>Aplica para ejecutivos con antigüedad mayor a 3 meses en la empresa. La base semanal es fija en $2,000 y los factores de comisión aplican a partir de la 3ra activación semanal.</p>
+                    <p>Este esquema solo es válido para las tiendas indicadas por el área comercial</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="background-color: #0073AE;">Activaciones</th>
+                                <th>Base Semanal</th>
+                                <th>Factor Básico</th>
+                                <th>Factor Plus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1 y 2 Activaciones</strong> </td>
+                                <td class="result-value" style="font-size: 16px;">$2,000</td>
+                                <td><span class="note-highlight">0 X</span></td>
+                                <td><span class="note-highlight">0 X</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong> 3 + Activaciones</strong></td>
+                                <td class="result-value" style="font-size: 16px;">$2,000</td>
+                                <td><span class="note-highlight">0.5 X</span></td>
+                                <td><span class="note-highlight">1.0 X</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bonus-note">
+                    <strong>📈 RECALCULO DE ACTIVACIONES (FINAL DE MES):</strong>
+                    <ol>
+                        <li>Si el ejcutivo tiene un logro mensual de <span class="note-highlight">12 a 15</span> activaciones, estas ventas se recalculan a un factor de <span class="note-highlight">1.2X</span>.</li>
+                        <li>Si el ejcutivo tiene un logro mensual mayor de <span class="note-highlight">16</span> activaciones, estas ventas se recalculan a un factor de <span class="note-highlight">1.5X</span>.</li>
+                    </ol>
+                    (Solo cuentan para cuota de recalculo los planes básicos y plus)
+
+                </div>
+                <div class="bonus-note">
+                    <p>Pago Semanal de Renovaciones a <span class="note-highlight">1.0X</span> (Estas no suman para logro de cuota de activaciones)</p>
+                    <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                    <ol>
+                        <li>Si tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                    </ol>
+                </div>
+                
+                <div class="rules-section">
+                    <hr>
+                    <h2>2. Definiciones de Planes y Reglas de Cuota ℹ️</h2>
+
+                    Solicitar a Recursos Humanos el cambio de esquema del ejecutivo con los datos:
+                    <ul>
+                        <li><strong>Puesto:</strong> EJECUTIVO STORE</li>   
+                        <li><strong>Esquema Comisión:</strong> RETENCIÓN</li>
+                    </ul>
+                    <strong>NOTA:</strong> De no solicitar el cambio se tomará la información que este cargada en plantilla (Se les recuerda que estos cambios son únicamente el primer día de cada mes)<br><br>
+                    
+                    <h3>Definiciones de Planes y Factor Básico (Igual que Rentas)</h3>
+                    <p>Las comisiones se pagan semanalmente dependiendo de su logro</p>
+                    <ul class="rules-list">
+                        <li><strong>BÁSICO:</strong> AZUL 1, LITE 1 (Con y sin equipo).</li>
+                        <li><strong>PLUS:</strong> AZUL 2, AZUL 3, PLATA, ORO, BLACK, TITANIO, DIAMANTE, LITE 2, LITE 3, LITE 4, LITE 5, LITE 6, LITE 7 (Con y sin equipo).</li>
+                        <li>Los planes Azul 1 y LITE 1 <strong>con equipo</strong> tienen como logro de cuota un valor de <span class="note-highlight">1</span>.</li>
+                        <li>Los planes Azul 1 y LITE 1 <strong>sin equipo</strong> tienen como logro de cuota un valor de <span class="note-highlight">0.5</span>.</li>
+                    </ul>
+
+                    <h3>Reglas de Planes Simples / Simple Plus (Igual que Rentas)</h3>
+                    <ul class="rules-list">
+                        <li><strong>PLANES SIMPLES - SIMPLE PLUS (MASIVO) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">0.5X</span>.</li>
+                        <li><strong>PLANES SIMPLES - SIMPLE PLUS (EMPRESARIAL) de 12 meses:</strong> No suman para ningún logro de cuota y se pagan semanalmente a <span class="note-highlight">1X</span>.</li>
+                        <li>
+                            <strong>Planes SIMPLES/PLUS de 18 y 24 meses (Masivo y Empresarial):</strong> <span class="note-highlight">Cuentan a 1 para logro de cuota</span> 
+                        </li>
+                    </ul>
+
+                    <strong>Retención (Chargeback):</strong> Se aplica una retención del <span class="note-highlight">15%</span> para chargeback en toda venta de planes (activación o renovación) masivos o empresariales, excepto planes SIMPLES y SIMPLES PLUS (masivos y empresariales).<br>
+                    NOTA: Se hará la devolución de este 15% posterior a 6 meses, siempre y cuando estas líneas no hayan incurrido en Chargeback <br><br>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -576,6 +658,7 @@
                     <select id="schemeSelect" onchange="toggleSchemeInputs()">
                         <option value="entrenamiento">Entrenamiento</option>
                         <option value="rentas">Rentas</option>
+                        <option value="retencion">Retención</option>
                     </select>
                 </div>
         
@@ -692,6 +775,7 @@
             // 1. Ocultar todas las secciones
             document.getElementById('entrenamiento-section').style.display = 'none';
             document.getElementById('rentas-section').style.display = 'none';
+            document.getElementById('retencion-section').style.display = 'none';
 
             // 2. Mostrar la seleccionada
             document.getElementById(scheme + '-section').style.display = 'block';
@@ -830,7 +914,7 @@
                 fBasic = 0.5;
                 fPlus = (month === 1) ? 1.0 : (month === 2) ? 1.2 : 1.5;
                 fRenew = 0.5; // Base renovación entrenamiento
-            } else {
+            } else if (scheme === 'rentas') {
                 // Lógica Rentas (Sueldo base según tabla)
                 if (totalQuota < 1) totalBasePay = 0;
                 else if (totalQuota < 2) totalBasePay = 500;
@@ -847,6 +931,21 @@
                     fPlus = (totalQuota >= 5) ? 1.5 : (totalQuota >= 4) ? 1.2 : 1.0;
                 } else { fBasic = 0; fPlus = 0; }
                 fRenew = 1.0; // Base renovación rentas
+            } else if (scheme === 'retencion') { // <<< NEW LOGIC: ESQUEMA RETENCION
+                // Base Semanal Fija para todas las categorías
+                totalBasePay = 2000;
+                
+                // Factores Retención
+                if (totalQuota >= 3) {
+                    fBasic = 0.5;
+                    fPlus = 1.0;
+                } else { 
+                    // 1 y 2 activaciones: Base $2000, Factores 0X
+                    fBasic = 0; 
+                    fPlus = 0; 
+                }
+                fRenew = 1.0; // Base renovación retención (inherits from Rentas)            
+            
             }
 
             // 3. Renderizar y Calcular Comisiones
