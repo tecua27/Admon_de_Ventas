@@ -568,15 +568,13 @@
                             <label for="citySelector">Ciudad de Operación:</label>
                             <select id="citySelector" onchange="updateBasePay()">
                                 <option value="" data-pay="0" disabled selected>--- Seleccionar ---</option>
-                                <option value="PUEBLA" data-pay="2000">PUEBLA</option>
-                                <option value="CDMX" data-pay="2000">CDMX</option>
-                                <option value="VERACRUZ" data-pay="2000">VERACRUZ</option>
-                                <option value="GUADALAJARA" data-pay="2000">GUADALAJARA</option>
-                                <option value="TIJUANA" data-pay="2500">TIJUANA</option>
-                                <option value="MONTERREY" data-pay="2500">MONTERREY</option>
-                                <option value="SALTILLO" data-pay="2500">SALTILLO</option>
-                                <option value="ENSENADA" data-pay="2500">ENSENADA</option>
-                                <option value="MEXICALI" data-pay="2500">MEXICALI</option>
+                                <option value="1.-CENTRO-CDMX" data-pay="2000">1.-CENTRO-CDMX</option>
+                                <option value="2.-BAJA-NOR MXI / SLRC" data-pay="2500">2.-BAJA-NOR MXI / SLRC</option>
+                                <option value="2.-BAJA-NOR TIJ / ENS" data-pay="2500">2.-BAJA-NOR TIJ / ENS</option>
+                                <option value="3.-NORTE" data-pay="2500">3.-NORTE</option>
+                                <option value="4.-PACIFICO - BAJIO" data-pay="2000">4.-PACIFICO - BAJIO</option>
+                                <option value="5.-SUR - PUE" data-pay="2000">4.-5.-SUR - PUE</option>
+                                <option value="5.-SUR - VER" data-pay="2000">5.-SUR - VER</option>
                             </select>
                         </div>
                         
@@ -631,11 +629,12 @@
                     </div>
                 </div>
                 <div class="bonus-note">
-                    <p>Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span> (sin importar el mes).</p>
-                    <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                    Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span>
+                    <p><strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong></p>
                     <ol>
-                        <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li><br>
-                        <li>Solo SI se logra la cuota <span class="note-highlight">mensual de Activaciones</span> y 10 o mas Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual de <span class="note-highlight">0 a 5 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">0.5X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual de <span class="note-highlight">6 a 11 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual <span class="note-highlight">Mayor a 12 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.5X</span>.</li>
                     </ol>
                 </div>
                 <div class="slide-container-1">
@@ -648,8 +647,9 @@
                         </p>
 
                         <ul>
-                            <li><strong>Básico (Valor 0.5):</strong> Azul, Azul 1, Lite 1. (Siempre se paga a .5X)</li> 
-                            <li><strong>Plus (Valor 1.0):</strong> Azul 2 y 3 , Plata, Oro, Black, Titanio, Diamante, Platino, Lite 2-6, ilimitado. </li>
+                            <li><strong>Básico (Suma 0.5):</strong>Lite, Azul 1, Lite 1 (Siempre se paga a .5X)</li> 
+                            <li><strong>Plus (Suma 1.0):</strong> Azul 2 y 3 , Plata, Oro, Black, Titanio, Diamante, Platino, Lite 2-6, ilimitado. </li>
+                            <li><strong>Nota:</strong> Renovaciones Titanio a Titanio el pago es de $100</li>
                          </ul>
     
                         <div class="insurance-box">
@@ -663,9 +663,9 @@
                     <div class="card">
                         <h3>⚡ Planes Simples</h3>
                         <ul>
-                            <li><strong>12 Meses Masivo:</strong> Paga a <span class="highlight">0.5X</span> y No suman para logro de cuota.</li>
-                            <li><strong>12 Meses Empresarial:</strong> Paga a <span class="highlight">1X</span> y No suman para logro de cuota..</li>
-                            <li><strong>18/24 Meses (Masivo y Empresarial):</strong><span id="simplePlusRuleDisplay" class="note-highlight" style="margin-left: 10px;">Seleccione su ciudad para ver la regla de conteo.</span></li>
+                            <li><strong>12 Meses Masivo:</strong> Se paga a 0.5X y <span class="highlight">No suman</span> para logro de cuota.</li>
+                            <li><strong>12 Meses Empresarial:</strong> Se paga a 1X y <span class="highlight">No suman</span> para logro de cuota.</li>
+                            <li><strong>18/24 Meses (Masivo y Empresarial):</strong> Suman a <span class="highlight">0.5</span> para el logro de cuota.
                         </ul>
                     </div>
                     <div class="card">
@@ -762,13 +762,17 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div class="bonus-note">
-                    <p>Pago Semanal de Renovaciones a <span class="note-highlight">1.0X</span> (Estas no suman para logro de cuota de activaciones)</p>
-                    <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                    Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span>
+                    <p><strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong></p>
                     <ol>
-                        <li>Si tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual de <span class="note-highlight">0 a 5 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">0.5X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual de <span class="note-highlight">6 a 11 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual <span class="note-highlight">Mayor a 12 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.5X</span>.</li>
                     </ol>
                 </div><br>
+                
                 <div>
                     <div class="header">Definiciones de Planes y Reglas de Cuota</div>
                     <div class="card">
@@ -777,10 +781,11 @@
                         🎯 CAT Semanal Logrado = Pago Desbloqueado 🔓
                         </p>
                         <ul>                                            
-                            <li><strong>Básico (Valor 0.5):</strong> Azul, Azul 1, Lite 1. (SIN EQUIPO)</li> 
-                            <li><strong>Básico (Valor 1):</strong> Azul, Azul 1, Lite 1. (CON EQUIPO)</li>
-                            <li><strong>Plus (Valor 1.0):</strong> Azul 2 y 3 , Plata, Oro, Black, Titanio, Diamante, Platino, Lite 2-6, ilimitado. </li>
-                            <li>El pago de $500 de apoyo es valido solo una vez al mes</li><br>
+                            <li><strong>Básico (Suma 0.5):</strong>Lite, Azul 1, Lite 1. (SIN EQUIPO)(Siempre se paga a .5X)</li> 
+                            <li><strong>Básico (Suma 1):</strong> Lite, Azul 1, Lite 1. (CON EQUIPO)(Siempre se paga a .5X)</li>
+                            <li><strong>Plus (Suma 1.0):</strong> Azul 2 y 3 , Plata, Oro, Black, Titanio, Diamante, Platino, Lite 2-6, ilimitado. </li>
+                            <li>El pago de $500 de apoyo es valido solo una vez al mes</li>
+                            <li><strong>Nota:</strong> Renovaciones Titanio a Titanio el pago es de $100</li><br>
                         </ul>
                         <div class="insurance-box">
                             <span class="insurance-title">🚀 ¡Potencia tu Comisión!</span>
@@ -791,9 +796,9 @@
                     <div class="card">
                         <h3>⚡ Planes Simples</h3>
                         <ul>
-                            <li><strong>12 Meses Masivo:</strong> Paga a <span class="highlight">0.5X</span> y No suman para logro de cuota.</li>
-                            <li><strong>12 Meses Empresarial:</strong> Paga a <span class="highlight">1X</span> y No suman para logro de cuota..</li>
-                            <li><strong>18/24 Meses (Masivo y Empresarial):</strong> Cuentan a <span class="highlight">1.0</span> para el logro de cuota.
+                            <li><strong>12 Meses Masivo:</strong> Se paga a 0.5X y <span class="highlight">No suman</span> para logro de cuota.</li>
+                            <li><strong>12 Meses Empresarial:</strong> Se paga a 1X y <span class="highlight">No suman</span> para logro de cuota.</li>
+                            <li><strong>18/24 Meses (Masivo y Empresarial):</strong> Suman a <span class="highlight">1</span> para el logro de cuota.
                         </ul>
                     </div>
                     <div class="card">
@@ -821,10 +826,28 @@
                     <h2>1. Esquema de Retención 🛡️</h2>
                     <p>Aplica para ejecutivos con antigüedad mayor a 3 meses en la empresa. La base semanal depende de la ciudad y los factores de comisión aplican a partir de la 3ra activación semanal.</p>
                     <p>Para mantener el flujo de comisiones, es indispensable cumplir con la cuota semanal de 3 ventas. En caso de no alcanzarlo, el cálculo de comisiones se suspende. El sistema retomará el pago de comisiones en Recalculo si el ejecutivo logra su cuota mensual."</p>
-                    
-                    
 
                     <p>Este esquema solo es válido para las tiendas indicadas por el área comercial</p>
+
+                    <div class="form-group">
+                        <label for="citySelectorRet">Región de Operación:</label>
+                        <select id="citySelectorRet" onchange="updateBasePayRet()">
+                            <option value="" data-pay="0" disabled selected>--- Seleccionar ---</option>
+                            <option value="1.-CENTRO-CDMX" data-pay="2000">1.-CENTRO-CDMX</option>
+                            <option value="2.-BAJA-NOR MXI / SLRC" data-pay="2500">2.-BAJA-NOR MXI / SLRC</option>
+                            <option value="2.-BAJA-NOR TIJ / ENS" data-pay="2500">2.-BAJA-NOR TIJ / ENS</option>
+                            <option value="3.-NORTE" data-pay="2000">3.-NORTE</option>
+                            <option value="4.-PACIFICO - BAJIO" data-pay="2000">4.-PACIFICO - BAJIO</option>
+                            <option value="5.-SUR - PUE" data-pay="2000">5.-SUR - PUE</option>
+                            <option value="5.-SUR - VER" data-pay="2000">5.-SUR - VER</option>
+                        </select>
+                    </div>
+
+                    <div class="result-display">
+                        <div>Base Semanal (según región):</div>
+                        <div class="result-value" id="basePayDisplayRet">$0.00</div>
+                    </div>
+
                     <table>
                     <thead>
                         <tr><th>Activaciones</th><th>Base Semanal</th><th>Factor Básico</th><th>Factor Plus</th></tr>
@@ -832,19 +855,20 @@
                     <tbody>
                         <tr>
                             <td>1 y 2</td>
-                            <td id="retBaseTable1" style="font-weight:bold; color:var(--main-teal)">$2,000.0</td>
+                            <td id="retBaseTable1" style="font-weight:bold; color:var(--main-teal)">$0.0</td>
                             <td class="note-highlight">0 X</td>
                             <td class="note-highlight">0 X</td>
                         </tr>
                         <tr>
                             <td>+ 3</td>
-                            <td id="retBaseTable2" style="font-weight:bold; color:var(--main-teal)">$2,000.0</td>
+                            <td id="retBaseTable2" style="font-weight:bold; color:var(--main-teal)">$0.0</td>
                             <td class="note-highlight">0.5 X</td>
                             <td class="note-highlight">1.0 X</td>
                         </tr>
                     </tbody>
                 </table>
                 </div>
+                
                 <div class="bonus-note">
                     <strong>📈 RECALCULO DE ACTIVACIONES (FINAL DE MES):</strong>
                     <ol>
@@ -853,13 +877,20 @@
                     </ol>
                     (Solo cuentan para cuota de recalculo los planes básicos y plus)
                 </div>
+
                 <div class="bonus-note">
-                    <p>Pago Semanal de Renovaciones a <span class="note-highlight">1.0X</span> (Estas no suman para logro de cuota de activaciones)</p>
-                    <strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong>
+                    Pago Semanal de Renovaciones a <span class="note-highlight">0.5X</span>
+                    <p><strong>🚨 REGLAS DE RECALCULO DE RENOVACIONES (FINAL DE MES):</strong></p>
                     <ol>
-                        <li>Si tiene un logro mayor o igual a 10 Renovaciones, el Factor se recalcula a <span class="note-highlight">1.5X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual de <span class="note-highlight">0 a 5 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">0.5X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual de <span class="note-highlight">6 a 11 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.0X</span>.</li>
+                        <li>Si el ejecutivo tiene un logro mensual <span class="note-highlight">Mayor a 12 RENOVACIONES</span>, el Factor de Renovaciones se recalcula a <span class="note-highlight">1.5X</span>.</li>
                     </ol>
-                </div><br>
+                </div>
+
+                
+                
+                
                 <div>
                     <div class="header">Definiciones de Planes y Reglas de Cuota</div>
                     <div class="card">
@@ -868,9 +899,10 @@
                         🎯 Cuota Semanal Lograda = Pago Desbloqueado 🔓
                         </p>
                         <ul>                                            
-                            <li><strong>Básico (Valor 0.5):</strong> Azul, Azul 1, Lite 1. (SIN EQUIPO) (Siempre se paga a .5X)</li> 
-                            <li><strong>Básico (Valor 1):</strong> Azul, Azul 1, Lite 1. (CON EQUIPO) (Siempre se paga a .5X)</li>
+                            <li><strong>Básico (Suma 0.5):</strong> Lite, Azul 1, Lite 1. (SIN EQUIPO) (Siempre se paga a .5X)</li> 
+                            <li><strong>Básico (Suma 1):</strong> Lite, Azul 1, Lite 1. (CON EQUIPO) (Siempre se paga a .5X)</li>
                             <li><strong>Plus (Valor 1.0):</strong> Azul 2 y 3 , Plata, Oro, Black, Titanio, Diamante, Platino, Lite 2-6, ilimitado. </li>
+                            <li><strong>Nota:</strong> Renovaciones Titanio a Titanio el pago es de $100</li><br>
                         </ul>
                         <div class="insurance-box">
                             <span class="insurance-title">🚀 ¡Potencia tu Comisión!</span>
@@ -882,9 +914,9 @@
                     <div class="card">
                         <h3>⚡ Planes Simples</h3>
                         <ul>
-                            <li><strong>12 Meses Masivo:</strong> Paga a <span class="highlight">0.5X</span> y No suman para logro de cuota.</li>
-                            <li><strong>12 Meses Empresarial:</strong> Paga a <span class="highlight">1X</span> y No suman para logro de cuota..</li>
-                            <li><strong>18/24 Meses (Masivo y Empresarial):</strong> Cuentan a <span class="highlight">1.0</span> para el logro de cuota.
+                            <li><strong>12 Meses Masivo:</strong> Se paga a 0.5X y <span class="highlight">No suman</span> para logro de cuota.</li>
+                            <li><strong>12 Meses Empresarial:</strong> Se paga a 1X y <span class="highlight">No suman</span> para logro de cuota.</li>
+                            <li><strong>18/24 Meses (Masivo y Empresarial):</strong> Suman a <span class="highlight">1</span> para el logro de cuota.
                         </ul>
                     </div>
                     <div class="card">
@@ -928,6 +960,19 @@
                         <select id="citySelect" onchange="calculate()">
                             <option value="2000">PUEBLA / CDMX / GDL / VER </option>
                             <option value="2500">TIJUANA / MEXICALI / ENSENADA / MTY / SLT</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group" id="retencionCityInputs">
+                        <label>Región:</label>
+                        <select id="citySelectRet" onchange="calculate()">
+                            <option value="2000">1.-CENTRO-CDMX</option>
+                            <option value="2500">2.-BAJA-NOR MXI / SLRC</option>
+                            <option value="2500">2.-BAJA-NOR TIJ / ENS</option>
+                            <option value="2000">3.-NORTE</option>
+                            <option value="2000">4.-PACIFICO - BAJIO</option>
+                            <option value="2000">5.-SUR - PUE</option>
+                            <option value="2000">5.-SUR - VER</option>
                         </select>
                     </div>
 
@@ -1092,27 +1137,39 @@
             const pay = parseFloat(selectedOption.getAttribute('data-pay')) || 0.00;
             const formatter = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' });
             document.getElementById('basePayDisplayRet').innerText = formatter.format(pay);
+
+            // Refleja la base semanal seleccionada también en la tabla de Activaciones
+            const table1 = document.getElementById('retBaseTable1');
+            const table2 = document.getElementById('retBaseTable2');
+            if (table1) table1.innerText = formatter.format(pay);
+            if (table2) table2.innerText = formatter.format(pay);
+
+            // Mantiene sincronizada la calculadora con la región elegida aquí
+            const calcSelector = document.getElementById('citySelectRet');
+            if (calcSelector) {
+                calcSelector.value = selector.value;
+                calculate();
+            }
         }
 
         // --- 3. LÓGICA DE CALCULADORA2.HTML (CALCULADORA) ---
         const plansDB = [
-            { name: "AT&T AZUL", price: 233.511884834282, category: "BASIC" },
-            { name: "AT&T AZUL 1", price: 276.196853, category: "BASIC" },
-            { name: "AT&T AZUL 2", price: 364.0776699, category: "PLUS" },
-            { name: "AT&T AZUL 3", price: 460.3280884, category: "PLUS" },
-            { name: "AT&T PLATA", price: 544.0241045, category: "PLUS" },
-            { name: "AT&T ORO", price: 606.7961165, category: "PLUS" },
-            { name: "AT&T BLACK", price: 690.4921326, category: "PLUS" },
-            { name: "AT&T TITANIO", price: 690.4921326, category: "PLUS" },
-            { name: "AT&T PLATINO", price: 1088.048209, category: "PLUS" },
-            { name: "AT&T DIAMANTE", price: 1338.299297, category: "PLUS" },
-            { name: "ATT LITE 1", price: 292.0990961, category: "BASIC" },
-            { name: "ATT LITE 2", price: 375.7951122, category: "PLUS" },
-            { name: "ATT LITE 3", price: 459.4911282, category: "PLUS" },
-            { name: "ATT LITE 4", price: 559.9263475, category: "PLUS" },
-            { name: "ATT LITE 5", price: 643.6223636, category: "PLUS" },
-            { name: "ATT LITE 6", price: 836.1232005, category: "PLUS" },
-            { name: "ATT LITE ILIMITADO", price: 1212.755273, category: "PLUS" }
+            { name: "AT&T LITE", price: 250.251088048209, category: "BASIC" },
+            { name: "AT&T AZUL 1", price: 276.196853029796, category: "BASIC" },
+            { name: "AT&T AZUL 2", price: 364.077669902913, category: "PLUS" },
+            { name: "AT&T AZUL 3", price: 460.328088382993, category: "PLUS" },
+            { name: "AT&T PLATA", price: 544.024104452628, category: "PLUS" },
+            { name: "AT&T ORO", price: 606.796116504854, category: "PLUS" },
+            { name: "AT&T BLACK", price: 690.492132574489, category: "PLUS" },
+            { name: "AT&T TITANIO", price: 690.492132574489, category: "PLUS" },
+            { name: "AT&T PLATINO", price: 866.253766320723, category: "PLUS" },
+            { name: "AT&T DIAMANTE", price: 1088.04820890526, category: "PLUS" },
+            { name: "ATT LITE 1", price: 292.099096083026, category: "BASIC" },
+            { name: "ATT LITE 2", price: 375.795112152662, category: "PLUS" },
+            { name: "ATT LITE 3", price: 459.491128222297, category: "PLUS" },
+            { name: "ATT LITE 4", price: 559.926347505859, category: "PLUS" },
+            { name: "ATT LITE 5", price: 836.123200535655, category: "PLUS" },
+            { name: "ATT LITE ILIMITADO", price: 1212.75527284901, category: "PLUS" }
         ];
 
         let sales = [];
@@ -1123,6 +1180,11 @@
             
             const basePayRetDisp = document.getElementById('basePayDisplayRet');
             if (basePayRetDisp) basePayRetDisp.innerText = '$0.00';
+
+            const retTable1 = document.getElementById('retBaseTable1');
+            const retTable2 = document.getElementById('retBaseTable2');
+            if (retTable1) retTable1.innerText = '$2,000.0';
+            if (retTable2) retTable2.innerText = '$2,000.0';
 
             const select = document.getElementById('planSelect');
             if (select) {
@@ -1138,9 +1200,9 @@
 
         function toggleSchemeInputs() {
             const scheme = document.getElementById('schemeSelect').value;
-            // CIUDAD SOLO PARA ENTRENAMIENTO (Eliminado de Retención para la calculadora)
             document.getElementById('trainingInputs').style.display = (scheme === 'entrenamiento') ? 'flex' : 'none';
             document.getElementById('monthInputs').style.display = scheme === 'entrenamiento' ? 'flex' : 'none';
+            document.getElementById('retencionCityInputs').style.display = (scheme === 'retencion') ? 'flex' : 'none';
             calculate();
         }
 
@@ -1201,8 +1263,8 @@
                 } else { fBasic = 0; fPlus = 0; }
                 fRenew = 1.0;
             } else if (scheme === 'retencion') {
-                // SE ASIGNA BASE FIJA DE 2000 PARA TODOS
-                totalBasePay = 2000;
+                // BASE SEGÚN REGIÓN: $2,500 para BAJA-NOR (MXI/SLRC y TIJ/ENS), $2,000 para el resto
+                totalBasePay = basePayFromSelect;
                 if (totalQuota >= 3) { fBasic = 0.5; fPlus = 1.0; } 
                 else { fBasic = 0; fPlus = 0; }
                 fRenew = 1.0;
@@ -1226,7 +1288,8 @@
 
         function calculate() {
             const scheme = document.getElementById('schemeSelect').value;
-            const basePayFromSelect = parseFloat(document.getElementById('citySelect').value);
+            const basePaySelectorId = (scheme === 'retencion') ? 'citySelectRet' : 'citySelect';
+            const basePayFromSelect = parseFloat(document.getElementById(basePaySelectorId).value);
             const month = parseInt(document.getElementById('monthSelect').value);
             
             const result = calculateScheme(scheme, sales, basePayFromSelect, month);
