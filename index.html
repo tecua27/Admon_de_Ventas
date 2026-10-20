@@ -259,9 +259,8 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <th>Activaciones</th>
                   <th>Categoría</th>
                   <th>Base semanal</th>
-                  <th>Factor Básicos</th>
+                  <th>Factor Básico y Lites</th>
                   <th>Factor Plus</th>
-                  <th>Factor Lites</th>
                 </tr>
               </thead>
               <tbody>
@@ -271,13 +270,11 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <td><b>$500.00</b></td>
                   <td><span class="x">0X</span></td>
                   <td><span class="x">0X</span></td>
-                  <td><span class="x">0X</span></td>
                 </tr>
                 <tr>
                   <td>2</td>
                   <td><b>CAT-2</b></td>
                   <td><b>$800.00</b></td>
-                  <td><span class="x">0X</span></td>
                   <td><span class="x">0X</span></td>
                   <td><span class="x">0X</span></td>
                 </tr>
@@ -287,7 +284,6 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <td><b>$1,000.00</b></td>
                   <td><span class="x">0.5X</span></td>
                   <td><span class="x">1.0X</span></td>
-                  <td><span class="x">1.0X</span></td>
                 </tr>
                 <tr>
                   <td>4</td>
@@ -295,7 +291,6 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <td><b>$1,700.00</b></td>
                   <td><span class="x">0.5X</span></td>
                   <td><span class="x">1.2X</span></td>
-                  <td><span class="x">1.0X</span></td>
                 </tr>
                 <tr>
                   <td>5 y 6</td>
@@ -303,7 +298,6 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <td><b>$2,000.00</b></td>
                   <td><span class="x">0.5X</span></td>
                   <td><span class="x">1.5X</span></td>
-                  <td><span class="x">1.0X</span></td>
                 </tr>
                 <tr>
                   <td>7 y 8</td>
@@ -311,7 +305,6 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <td><b>$2,500.00</b></td>
                   <td><span class="x">0.5X</span></td>
                   <td><span class="x">1.5X</span></td>
-                  <td><span class="x">1.0X</span></td>
                 </tr>
                 <tr>
                   <td>9 o más</td>
@@ -319,7 +312,6 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                   <td><b>$3,000.00</b></td>
                   <td><span class="x">0.5X</span></td>
                   <td><span class="x">1.5X</span></td>
-                  <td><span class="x">1.0X</span></td>
                 </tr>
               </tbody>
             </table>
@@ -330,18 +322,23 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
             <h3>📂 Planes y valor para cuota</h3>
             <div class="box m">
               <div class="h">
-                <span>BÁSICOS</span><span>Suman 0.5 con o sin equipo</span>
+                <span>BÁSICO Y LITES</span><span>Suman 1.0 · pagan 0.5X</span>
               </div>
-              <span class="chip">Lite</span><span class="chip">Azul 1</span><span class="chip">Lite 1</span><span class="chip">Lite 2</span>
+              <span class="chip">Azul 1</span><span class="chip">Lite 1 - Lite 6</span><span class="chip">Lite Ilimitado</span>
             </div>
-            <div class="box p">
+                        <div class="box p">
               <div class="h">
-                <span>PLUS</span><span>Suman 1.0</span>
+                <span>PLUS</span><span>Suman 1.0 · pagan 1.0X a 1.5X</span>
               </div>
-              <span class="chip">Azul 2</span><span class="chip">Azul 3</span><span class="chip">Plata</span><span class="chip">Oro</span><span class="chip">Black</span><span class="chip">Titanio</span><span class="chip">Platino</span><span class="chip">Diamante</span><span class="chip">Lite 3 a 6</span><span class="chip">Lite Ilimitado</span>
+              <span class="chip">Azul 2</span><span class="chip">Azul 3</span><span class="chip">Plata</span><span class="chip">Oro</span><span class="chip">Black</span><span class="chip">Titanio</span><span class="chip">Platino</span><span class="chip">Diamante</span>
             </div>
-              <p class="note">Los Básicos, incluido Lite 2, se mantienen en 0.5X aunque subas de nivel. Solo cuentan para recálculo los Básicos (a 0.5) y los Plus.</p>
-              <p class="note">Todos los planes Lite del 3 en adelante tienen tope de pago de 1X</p>
+            <div class="box" style="background:var(--yel)">
+              <div class="h">
+                <span>LITE (caso único)</span><span>Suma 0.5 · paga 0.5X</span>
+              </div>
+              <span class="chip">Lite</span>
+            </div>
+<p class="note">Todos los planes Lite tienen tope de pago de 0.5X.</p>
           </div>
 
           <div class="grid" style="grid-template-columns:1fr 1fr">
@@ -358,7 +355,7 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
             <!-- ▼ TARJETA: 🔁 Recálculo mensual ▼ -->
             <div class="card ">
               <h3>🔁 Recálculo mensual</h3>
-              <p style="margin:0">Si fallaste una semana y al cierre del mes cumples tu meta total de <b>20 activaciones</b>, te pagamos lo que faltó. Solo cuentan Básicos (a 0.5) y Plus.</p>
+              <p style="margin:0">Si fallaste una semana y al cierre del mes cumples tu meta total de <b>20 activaciones</b>, te pagamos lo que faltó. Cuentan todos los planes: Lite suma 0.5 y el resto suma 1.</p>
             </div>
           </div>
         </div>
@@ -368,10 +365,8 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
           <div class="card ">
             <h3>📌 Reglas de pago por plan</h3>
             <ul class="r">
-              <li><b>Lite, Azul 1, Lite 1:</b> tope 0.5X sin importar la categoría.</li>
-              <li><b>Lite 2:</b> es Básico. Suma 0.5 y se paga a 0.5X en todas las categorías.</li>
-              <li><b>Lite 3 a Ilimitado:</b> tope 1X, pago semanal.</li>
-              <li><b>Plus:</b> 1.0X a 1.5X según tu categoría.</li>
+              <li><b>BASICOS Y LITES:</b> tope  de pago 0.5X sin importar la categoría, pago semanal.</li>
+              <li><b>Plus:</b> Pago a 1.0X a 1.5X según tu categoría.</li>
             </ul>
           </div>
 
@@ -470,9 +465,8 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                 <thead>
                   <tr>
                     <th>Activaciones</th>
-                    <th>Básicos</th>
+                    <th>Básico y Lites</th>
                     <th>Plus</th>
-                    <th>Lite 3 a Ilim</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -480,12 +474,10 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                     <td>1 y 2</td>
                     <td><span class="x">0X</span></td>
                     <td><span class="x">0X</span></td>
-                    <td><span class="x">0X</span></td>
                   </tr>
                   <tr>
                     <td>3 o más</td>
                     <td><span class="x">0.5X</span></td>
-                    <td><span class="x">1.0X</span></td>
                     <td><span class="x">1.0X</span></td>
                   </tr>
                 </tbody>
@@ -499,9 +491,8 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                 <thead>
                   <tr>
                     <th>Activaciones en el mes</th>
-                    <th>BASICOS</th>
+                    <th>BÁSICO Y LITES</th>
                     <th>PLUS</th>
-                    <th>LITES</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -509,17 +500,15 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
                     <td>12 a 15</td>
                     <td><span class="x">0.5X</span></td>
                     <td><span class="x">1.2X</span></td>
-                    <td><span class="x">1.0X</span></td>
                   </tr>
                   <tr>
                     <td>16 o más</td>
                     <td><span class="x">0.5X</span></td>
                     <td><span class="x">1.5X</span></td>
-                    <td><span class="x">1.0X</span></td>
                   </tr>
                 </tbody>
               </table>
-              <p class="note">Los Básicos, incluido Lite 2, se mantienen en 0.5X aunque subas de nivel. Solo cuentan para recálculo los Básicos (a 0.5) y los Plus.</p>
+              <p class="note">El Básico y todos los planes Lite se mantienen en 0.5X aunque subas de nivel. Para el recálculo solo cuentan todos los planes basicos y plus</p>
             </div>
           </div>
 
@@ -528,18 +517,23 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
             <h3>📂 Planes y valor para cuota</h3>
             <div class="box m">
               <div class="h">
-                <span>BÁSICOS</span><span>Suman 0.5 con o sin equipo</span>
+                <span>BÁSICO Y LITES</span><span>Suman 1.0 · pagan 0.5X</span>
               </div>
-              <span class="chip">Lite</span><span class="chip">Azul 1</span><span class="chip">Lite 1</span><span class="chip">Lite 2</span>
+              <span class="chip">Azul 1</span><span class="chip">Lite 1 - Lite 6</span><span class="chip">Lite Ilimitado</span>
             </div>
-            <div class="box p">
+                        <div class="box p">
               <div class="h">
-                <span>PLUS</span><span>Suman 1.0</span>
+                <span>PLUS</span><span>Suman 1.0 · pagan 1.0X a 1.5X</span>
               </div>
-              <span class="chip">Azul 2</span><span class="chip">Azul 3</span><span class="chip">Plata</span><span class="chip">Oro</span><span class="chip">Black</span><span class="chip">Titanio</span><span class="chip">Platino</span><span class="chip">Diamante</span><span class="chip">Lite 3 a 6</span><span class="chip">Lite Ilimitado</span>
+              <span class="chip">Azul 2</span><span class="chip">Azul 3</span><span class="chip">Plata</span><span class="chip">Oro</span><span class="chip">Black</span><span class="chip">Titanio</span><span class="chip">Platino</span><span class="chip">Diamante</span>
             </div>
-              <p class="note">Los Básicos, incluido Lite 2, se mantienen en 0.5X aunque subas de nivel. Solo cuentan para recálculo los Básicos (a 0.5) y los Plus.</p>
-              <p class="note">Todos los planes Lite del 3 en adelante tienen tope de pago de 1X</p>
+            <div class="box" style="background:var(--yel)">
+              <div class="h">
+                <span>LITE (caso único)</span><span>Suma 0.5 · paga 0.5X</span>
+              </div>
+              <span class="chip">Lite</span>
+            </div>
+<p class="note">Todos los planes Lite tienen tope de pago de 0.5X.</p>
             
           </div>
 
@@ -662,7 +656,7 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
       <div class="tc neg"><h4>Retención 15%</h4><b id="oRet">$0.00</b><small>Se devuelve a los 6 meses si la línea sigue activa</small></div>
       <div class="tc fin"><h4>Total a pagar (estimado)</h4><b id="oTotal">$0.00</b><small>Base + comisiones − retención</small></div>
     </div>
-    <p class="note">Cálculo informativo basado en las hojas de esquemas de Octubre 2026. No incluye recálculo mensual, seguros ni el apoyo de $500 de Rentas (una vez al mes).</p>
+    <p class="note">Cálculo informativo basado en las hojas de esquemas de Octubre 2026. No incluye recálculo mensual ni seguros.</p>
   </section>
 
   <div class="foot"><span>ExpertCell · Distribuidor Autorizado AT&amp;T · Esquema de Comisiones Tiendas Propias</span><span>Octubre 2026</span></div>
@@ -673,7 +667,7 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
 const REG_ENT=[["1.- CENTRO - CDMX",2000],["2.- BAJA-NOR MXI / SLRC",2500],["2.- BAJA-NOR TIJ / ENS",2500],["3.- NORTE",2500],["4.- PACIFICO - BAJIO",2000],["5.- SUR - PUE",2000],["5.- SUR - VER",2000]];
 const REG_RET=[["1.- CENTRO - CDMX",2000],["2.- BAJA-NOR MXI / SLRC",2500],["2.- BAJA-NOR TIJ / ENS",2500],["3.- NORTE",2000],["4.- PACIFICO - BAJIO",2000],["5.- SUR - PUE",2000],["5.- SUR - VER",2000]];
 /* CATs de Rentas: [min activaciones, categoría, base, básicos, plus, lite3+] */
-const CATS=[[0,"—",0,0,0,0],[1,"CAT-1",500,0,0,0],[2,"CAT-2",800,0,0,0],[3,"CAT-3",1000,.5,1,1],[4,"CAT-4",1700,.5,1.2,1],[5,"CAT-5",2000,.5,1.5,1],[7,"CAT-7",2500,.5,1.5,1],[9,"CAT-9",3000,.5,1.5,1]];
+const CATS=[[0,"—",0,0,0,0],[1,"CAT-1",500,0,0,0],[2,"CAT-2",800,0,0,0],[3,"CAT-3",1000,.5,1,.5],[4,"CAT-4",1700,.5,1.2,.5],[5,"CAT-5",2000,.5,1.5,.5],[7,"CAT-7",2500,.5,1.5,.5],[9,"CAT-9",3000,.5,1.5,.5]];
 const CAT_LBL=["1","2","3","4","5 y 6","7 y 8","9 o más"];
 const PLANS=[
 ["AT&T LITE",250.251088048209,"b"],["AT&T AZUL 1",276.196853029796,"b"],["ATT LITE 1",292.099096083026,"b"],["ATT LITE 2",375.795112152662,"b"],
@@ -708,6 +702,13 @@ function showScheme(k){
 let sales=[];
 const $=id=>document.getElementById(id);
 const GL={b:"Básico",p:"Plus",l:"Lite 3+"};
+function label(s){ // etiqueta que se ve en la tabla de ventas
+  if($("scheme").value==="ent")return GL[s.g];
+  const g=grp(s);
+  if(g==="b")return "Básico";
+  if(g==="p")return "Plus";
+  return s.name==="AT&T LITE"?"Lite · suma 0.5 · paga 0.5X":"Lite · suma 1 · paga 0.5X";
+}
 
 function fillRegions(){
   const s=$("scheme").value, arr=s==="ret"?REG_RET:REG_ENT;
@@ -731,11 +732,20 @@ function addSale(){
 }
 function delSale(i){sales.splice(i,1);calc();}
 
+// Grupo del plan según el esquema. Entrenamiento no cambia (usa s.g).
+// Rentas / Retención: Básico = Azul 1 · Lite = todos los Lite · Plus = el resto
+function grp(s){
+  if($("scheme").value==="ent")return s.g;
+  if(s.name==="AT&T AZUL 1")return "b";
+  if(/LITE/.test(s.name))return "l";
+  return "p";
+}
 function quotaOf(s,scheme){
   if(s.type!=="act")return 0;
   if(s.mod==="s12m"||s.mod==="s12e")return 0;
   if(s.mod==="s18")return scheme==="ent"?0.5:1;
-  return s.g==="b"?0.5:1;
+  if(scheme==="ent")return s.g==="b"?0.5:1;
+  return s.name==="AT&T LITE"?0.5:1; // Rentas y Retención: todos suman 1, solo LITE suma 0.5
 }
 
 function compute(){
@@ -747,10 +757,10 @@ function compute(){
 
   if(scheme==="ent"){
     const ns=+$("noSale").value;              // semanas sin venta seguidas, contando esta
-    const sinVenta=Q===0&&ns>=3;              // $1,000 desde la 3ra semana sin venta
     unlocked=Q>=5;
+    const sinVenta=ns>=3&&!unlocked;          // $1,000 desde la 3ra semana sin venta (si no cumples la cuota de 5)
     base=sinVenta?1000:regBase;
-    baseNote=sinVenta?"3ra semana sin venta · se recupera la diferencia con 5 activaciones en el acumulado de 4 semanas":"Base semanal garantizada";
+    baseNote=sinVenta?"3ra semana sin venta · se recupera la diferencia con 5 activaciones en el acumulado de 4 semanas":(ns>=3?"Diferencia recuperada: cumpliste la cuota de 5":"Base semanal garantizada");
     if(unlocked)F={b:.5,p:1,l:1};
     status=unlocked?"Cuota cumplida · comisión desbloqueada":`Faltan ${(5-Q).toFixed(1)} para la cuota de 5`;
   }else if(scheme==="ren"){
@@ -763,7 +773,7 @@ function compute(){
   }else{
     base=regBase;baseNote="Fija por región";
     unlocked=Q>=3;
-    if(unlocked){F={b:.5,p:1,l:1};status="Comisión desbloqueada";}
+    if(unlocked){F={b:.5,p:1,l:.5};status="Comisión desbloqueada";}
     else status=`Cálculo suspendido: faltan ${(3-Q).toFixed(1)} para las 3 semanales`;
   }
 
@@ -776,9 +786,9 @@ function compute(){
       const simple=s.mod!=="n";
       if(s.mod==="s12m")f=unlocked||F.b?0.5:0;
       else if(s.mod==="s12e")f=unlocked||F.b?1:0;
-      else f=F[s.g];
+      else f=F[grp(s)];
       if((s.mod==="s12m"||s.mod==="s12e")&&F.b===0&&F.p===0)f=0;
-      if(s.mod==="s18"||s.mod==="n")f=F[s.g];
+      if(s.mod==="s18"||s.mod==="n")f=F[grp(s)];
       comm=s.price*f;
       if(!simple)retBase+=comm;
     }
@@ -799,7 +809,7 @@ function calc(){
   $("oRet").textContent="-"+money(r.ret);
   $("oTotal").textContent=money(r.total);
   const tb=document.querySelector("#salesTable tbody");
-  tb.innerHTML=r.rows.length?r.rows.map((x,i)=>`<tr><td class="l">${x.s.name} <small style="color:var(--mute)">(${GL[x.s.g]})</small></td><td>${x.s.type==="act"?"Activación":x.s.type==="ren"?"Renovación":"Titanio a Titanio"}</td><td><b class="x">${x.f===null?"$100 fijo":x.f.toFixed(1)+" X"}</b></td><td>${money(x.comm)}</td><td><button class="del" onclick="delSale(${i})" aria-label="Quitar venta">✕</button></td></tr>`).join("")
+  tb.innerHTML=r.rows.length?r.rows.map((x,i)=>`<tr><td class="l">${x.s.name} <small style="color:var(--mute)">(${label(x.s)})</small></td><td>${x.s.type==="act"?"Activación":x.s.type==="ren"?"Renovación":"Titanio a Titanio"}</td><td><b class="x">${x.f===null?"$100 fijo":x.f.toFixed(1)+" X"}</b></td><td>${money(x.comm)}</td><td><button class="del" onclick="delSale(${i})" aria-label="Quitar venta">✕</button></td></tr>`).join("")
     :`<tr class="empty"><td colspan="5">Aún no hay ventas. Elige un plan y agrégalo.</td></tr>`;
 }
 
