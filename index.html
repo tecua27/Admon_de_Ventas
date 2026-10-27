@@ -60,6 +60,10 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
 @media(max-width:820px){.tot{grid-template-columns:repeat(2,1fr)}.wrap{margin:0;border-radius:0;padding:16px 12px}.grid,.grid.two{grid-template-columns:1fr!important}.banner{flex-direction:column;align-items:flex-start}th,td{padding:6px 4px;font-size:12px}}
 /* m inicial: súbele o bájale el número (1.15 = 115%). Solo en pantallas grandes */
 @media(min-width:900px){body{zoom:1.00}}
+/* Rentas: partes que solo se ven al elegir región Baja Norte (clase "baja" en el body) */
+.only-baja{display:none!important}
+body.baja .only-baja{display:revert!important}
+body.baja .not-baja{display:none!important}
 </style>
 </head>
 <body>
@@ -252,6 +256,22 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
       <div class="grid">
         <div class="col">
 
+          <!-- ▼ TARJETA: 📍 Región de operación ▼ -->
+          <div class="card ">
+            <h3>📍 Región de operación</h3>
+            <label for="pick-ren">Región de operación</label>
+            <select id="pick-ren" onchange="pickRen(this.selectedIndex-1)">
+              <option value="" disabled="" selected="">--- Seleccionar ---</option>
+              <option>1.- CENTRO - CDMX</option>
+              <option>2.- BAJA-NOR MXI / SLRC</option>
+              <option>2.- BAJA-NOR TIJ / ENS</option>
+              <option>3.- NORTE</option>
+              <option>4.- PACIFICO - BAJIO</option>
+              <option>5.- SUR - PUE</option>
+              <option>5.- SUR - VER</option>
+            </select>
+            <p class="note">En Baja Norte (TIJ / ENS y MXL / SLRC) aplican factores especiales desde CAT-3.</p>
+          </div>
           <!-- ▼ TARJETA: 📊 Categorías semanales ▼ -->
           <div class="card ">
             <h3>📊 CAT semanal</h3>
@@ -319,18 +339,59 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
             </table>
           </div>
 
+          <!-- ▼ TARJETA: ⭐ Factores especiales (CAT-3 en adelante) · SOLO BAJA NORTE ▼ -->
+          <div class="card only-baja">
+            <h3>⭐ Factores especiales · CAT-3 en adelante</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Plan</th>
+                  <th>CAT-3</th>
+                  <th>CAT-4 y 5</th>
+                  <th>CAT-7 y 9</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Lite 1 a Lite 5</td>
+                  <td><span class="x">0.5X</span></td>
+                  <td><span class="x">0.75X</span></td>
+                  <td><span class="x">1.0X</span></td>
+                </tr>
+                <tr>
+                  <td>Plata, Oro y Black</td>
+                  <td><span class="x">1.2X</span></td>
+                  <td><span class="x">1.5X</span></td>
+                  <td><span class="x">1.7X</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="note">El resto de los planes pagan con los factores de la tabla CAT semanal.</p>
+          </div>
           <!-- ▼ TARJETA: 📂 Planes y valor para cuota ▼ -->
           <div class="card ">
             <h3>📂 Planes y valor para cuota</h3>
-            <div class="box m">
+            <div class="box m not-baja">
               <div class="h">
                 <span>BÁSICO Y LITES</span><span>Suman 1.0 · pagan 0.5X</span>
               </div>
               <span class="chip">Azul 1</span><span class="chip">Lite 1 - Lite 6</span><span class="chip">Lite Ilimitado</span>
             </div>
+            <div class="box m only-baja">
+              <div class="h">
+                <span>BÁSICO Y LITES</span><span>Suman 1.0 · pagan 0.5X</span>
+              </div>
+              <span class="chip">Azul 1</span><span class="chip">Lite 6</span><span class="chip">Lite Ilimitado</span>
+            </div>
+            <div class="box m only-baja">
+              <div class="h">
+                <span>LITE 1 A LITE 5</span><span>Suman 1.0 · pagan 0.5X a 1.0X</span>
+              </div>
+              <span class="chip">Lite 1 - Lite 5</span>
+            </div>
                         <div class="box p">
               <div class="h">
-                <span>PLUS</span><span>Suman 1.0 · pagan 1.0X a 1.5X</span>
+                <span>PLUS</span><span class="not-baja">Suman 1.0 · pagan 1.0X a 1.5X</span><span class="only-baja">Suman 1.0 · pagan 1.0X a 1.7X</span>
               </div>
               <span class="chip">Azul 2</span><span class="chip">Azul 3</span><span class="chip">Plata</span><span class="chip">Oro</span><span class="chip">Black</span><span class="chip">Titanio</span><span class="chip">Platino</span><span class="chip">Diamante</span>
             </div>
@@ -340,7 +401,8 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
               </div>
               <span class="chip">Lite</span>
             </div>
-<p class="note">Todos los planes Lite tienen tope de pago de 0.5X.</p>
+<p class="note not-baja">Todos los planes Lite tienen tope de pago de 0.5X.</p>
+<p class="note only-baja">Lite, Lite 6 y Lite Ilimitado tienen tope de pago de 0.5X.</p>
           </div>
 
           <div class="grid" style="grid-template-columns:1fr 1fr">
@@ -367,8 +429,11 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
           <div class="card ">
             <h3>📌 Reglas de pago por plan</h3>
             <ul class="r">
-              <li><b>BASICOS Y LITES:</b> tope  de pago 0.5X sin importar la categoría, pago semanal.</li>
+              <li class="not-baja"><b>BASICOS Y LITES:</b> tope  de pago 0.5X sin importar la categoría, pago semanal.</li>
+              <li class="only-baja"><b>AZUL 1, LITE, LITE 6 Y LITE ILIMITADO:</b> tope  de pago 0.5X sin importar la categoría, pago semanal.</li>
+              <li class="only-baja"><b>LITE 1 A LITE 5:</b> pago a 0.5X en CAT-3, 0.75X en CAT-4 y 5, y 1.0X en CAT-7 y 9.</li>
               <li><b>Plus:</b> Pago a 1.0X a 1.5X según tu categoría.</li>
+              <li class="only-baja"><b>PLATA, ORO Y BLACK:</b> pago a 1.2X en CAT-3, 1.5X en CAT-4 y 5, y 1.7X en CAT-7 y 9.</li>
             </ul>
           </div>
 
@@ -628,7 +693,7 @@ label{display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bott
           <select id="scheme" onchange="onScheme()">
             <option value="ent">Entrenamiento</option><option value="ren">Rentas</option><option value="ret">Retención</option>
           </select></div>
-        <div id="regBox"><label for="region">Región</label><select id="region" onchange="sel[$('scheme').value]=this.selectedIndex;calc()"></select></div>
+        <div id="regBox"><label for="region">Región</label><select id="region" onchange="regionChanged()"></select></div>
         <div id="nsBox"><label for="noSale">Semanas sin venta seguidas (incluida esta)</label>
           <select id="noSale" onchange="calc()"><option value="1">1ra semana sin venta</option><option value="2">2da semana sin venta</option><option value="3">3ra semana o más</option></select></div>
       </div>
@@ -670,6 +735,17 @@ const REG_ENT=[["1.- CENTRO - CDMX",2000],["2.- BAJA-NOR MXI / SLRC",2500],["2.-
 const REG_RET=[["1.- CENTRO - CDMX",2000],["2.- BAJA-NOR MXI / SLRC",2500],["2.- BAJA-NOR TIJ / ENS",2500],["3.- NORTE",2000],["4.- PACIFICO - BAJIO",2000],["5.- SUR - PUE",2000],["5.- SUR - VER",2000]];
 /* CATs de Rentas: [min activaciones, categoría, base, básicos, plus, lite3+] */
 const CATS=[[0,"—",0,0,0,0],[1,"CAT-1",500,0,0,0],[2,"CAT-2",800,0,0,0],[3,"CAT-3",1000,.5,1,.5],[4,"CAT-4",1700,.5,1.2,.5],[5,"CAT-5",2000,.5,1.5,.5],[7,"CAT-7",2500,.5,1.5,.5],[9,"CAT-9",3000,.5,1.5,.5]];
+/* Factores especiales de Rentas (CAT-3 en adelante) solo para estos planes. El resto usa la tabla CATS */
+const SPECIAL_REN={
+  "ATT LITE 1":{"CAT-3":.5,"CAT-4":.75,"CAT-5":.75,"CAT-7":1,"CAT-9":1},
+  "ATT LITE 2":{"CAT-3":.5,"CAT-4":.75,"CAT-5":.75,"CAT-7":1,"CAT-9":1},
+  "ATT LITE 3":{"CAT-3":.5,"CAT-4":.75,"CAT-5":.75,"CAT-7":1,"CAT-9":1},
+  "ATT LITE 4":{"CAT-3":.5,"CAT-4":.75,"CAT-5":.75,"CAT-7":1,"CAT-9":1},
+  "ATT LITE 5":{"CAT-3":.5,"CAT-4":.75,"CAT-5":.75,"CAT-7":1,"CAT-9":1},
+  "AT&T PLATA":{"CAT-3":1.2,"CAT-4":1.5,"CAT-5":1.5,"CAT-7":1.7,"CAT-9":1.7},
+  "AT&T ORO":{"CAT-3":1.2,"CAT-4":1.5,"CAT-5":1.5,"CAT-7":1.7,"CAT-9":1.7},
+  "AT&T BLACK":{"CAT-3":1.2,"CAT-4":1.5,"CAT-5":1.5,"CAT-7":1.7,"CAT-9":1.7}
+};
 const CAT_LBL=["1","2","3","4","5 y 6","7 y 8","9 o más"];
 const PLANS=[
 ["AT&T LITE",250.251088048209,"b"],["AT&T AZUL 1",276.196853029796,"b"],["ATT LITE 1",292.099096083026,"b"],["ATT LITE 2",375.795112152662,"b"],
@@ -680,7 +756,19 @@ const PLANS=[
 
 /* ============ UTILIDADES ============ */
 const money=n=>new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(n);
-const sel={ent:-1,ret:-1}; // región elegida en cada esquema (se comparte con la calculadora)
+const sel={ent:-1,ret:-1,ren:-1}; // región elegida en cada esquema (se comparte con la calculadora)
+// Rentas: los factores especiales solo aplican en Baja Norte (TIJ / ENS y MXL / SLRC)
+function esBaja(){ return sel.ren>=0 && /BAJA/.test(REG_RET[sel.ren][0]); }
+function aplicaBaja(){ document.body.classList.toggle("baja",esBaja()); }
+function pickRen(i){
+  sel.ren=i;aplicaBaja();
+  if($("scheme").value==="ren"){$("region").selectedIndex=i;calc();}
+}
+function regionChanged(){
+  const k=$("scheme").value;sel[k]=$("region").selectedIndex;
+  if(k==="ren"){aplicaBaja();$("pick-ren").selectedIndex=sel.ren+1;}
+  calc();
+}
 function pickBase(k,i){
   sel[k]=i;const arr=k==="ret"?REG_RET:REG_ENT;
   document.getElementById("base-"+k).textContent=money(arr[i][1]);
@@ -706,6 +794,7 @@ const $=id=>document.getElementById(id);
 const GL={b:"Básico",p:"Plus",l:"Lite 3+"};
 function label(s){ // etiqueta que se ve en la tabla de ventas
   if($("scheme").value==="ent")return GL[s.g];
+  if($("scheme").value==="ren"&&esBaja()&&SPECIAL_REN[s.name])return /LITE/.test(s.name)?"Lite · suma 1 · factor especial":"Plus · factor especial";
   const g=grp(s);
   if(g==="b")return "Básico";
   if(g==="p")return "Plus";
@@ -713,18 +802,18 @@ function label(s){ // etiqueta que se ve en la tabla de ventas
 }
 
 function fillRegions(){
-  const s=$("scheme").value, arr=s==="ret"?REG_RET:REG_ENT;
+  const s=$("scheme").value, arr=s==="ent"?REG_ENT:REG_RET;
   $("region").innerHTML=arr.map(r=>`<option value="${r[1]}">${r[0]}</option>`).join("");
   if(sel[s]>=0)$("region").selectedIndex=sel[s];
 }
 function onScheme(){
   const s=$("scheme").value;
-  $("regBox").classList.toggle("hide",s==="ren");
+  $("regBox").classList.remove("hide");
   $("nsBox").classList.toggle("hide",s!=="ent");
   $("schemeHint").textContent=s==="ent"
     ?"Entrenamiento: cálculo semanal. Captura tus activaciones acumuladas del mes: con 5 desbloqueas comisión (Plus 1.0X, Básicos 0.5X). Renovaciones a 0.5X."
     :s==="ren"
-    ?"Rentas: captura las ventas de la semana; tu categoría (CAT) define base y factores. Renovaciones a 0.5X."
+    ?"Rentas: captura las ventas de la semana; tu categoría (CAT) define base y factores. Elige tu región: en Baja Norte aplican los factores especiales. Renovaciones a 0.5X."
     :"Retención: captura las ventas de la semana. Con 3 activaciones se desbloquea la comisión; renovaciones a 0.5X.";
   fillRegions();calc();
 }
@@ -755,7 +844,7 @@ function compute(){
   const fRenew=0.5; // renovaciones siempre a 0.5X (el recálculo mensual va en otro apartado)
   const Q=sales.reduce((a,s)=>a+quotaOf(s,scheme),0);
   const regBase=+($("region").value||0);
-  let base=0,baseNote="",status="",unlocked=false,F={b:0,p:0,l:0};
+  let base=0,baseNote="",status="",unlocked=false,F={b:0,p:0,l:0},catName="";
 
   if(scheme==="ent"){
     const ns=+$("noSale").value;              // semanas sin venta seguidas, contando esta
@@ -767,6 +856,7 @@ function compute(){
     status=unlocked?"Cuota cumplida · comisión desbloqueada":`Faltan ${(5-Q).toFixed(1)} para la cuota de 5`;
   }else if(scheme==="ren"){
     let cat=CATS[0];CATS.forEach(c=>{if(Q>=c[0])cat=c;});
+    catName=cat[1];
     base=cat[2];baseNote=cat[1]==="—"?"Sin activaciones":cat[1];
     unlocked=Q>=3;
     if(unlocked)F={b:cat[3],p:cat[4],l:cat[5]};
@@ -791,6 +881,7 @@ function compute(){
       else f=F[grp(s)];
       if((s.mod==="s12m"||s.mod==="s12e")&&F.b===0&&F.p===0)f=0;
       if(s.mod==="s18"||s.mod==="n")f=F[grp(s)];
+      if(scheme==="ren"&&unlocked&&esBaja()&&SPECIAL_REN[s.name]&&SPECIAL_REN[s.name][catName]!==undefined)f=SPECIAL_REN[s.name][catName];
       comm=s.price*f;
       if(!simple)retBase+=comm;
     }
@@ -811,7 +902,7 @@ function calc(){
   $("oRet").textContent="-"+money(r.ret);
   $("oTotal").textContent=money(r.total);
   const tb=document.querySelector("#salesTable tbody");
-  tb.innerHTML=r.rows.length?r.rows.map((x,i)=>`<tr><td class="l">${x.s.name} <small style="color:var(--mute)">(${label(x.s)})</small></td><td>${x.s.type==="act"?"Activación":x.s.type==="ren"?"Renovación":"Titanio a Titanio"}</td><td><b class="x">${x.f===null?"$100 fijo":x.f.toFixed(1)+" X"}</b></td><td>${money(x.comm)}</td><td><button class="del" onclick="delSale(${i})" aria-label="Quitar venta">✕</button></td></tr>`).join("")
+  tb.innerHTML=r.rows.length?r.rows.map((x,i)=>`<tr><td class="l">${x.s.name} <small style="color:var(--mute)">(${label(x.s)})</small></td><td>${x.s.type==="act"?"Activación":x.s.type==="ren"?"Renovación":"Titanio a Titanio"}</td><td><b class="x">${x.f===null?"$100 fijo":(Math.round(x.f*100)%10===0?x.f.toFixed(1):x.f.toFixed(2))+" X"}</b></td><td>${money(x.comm)}</td><td><button class="del" onclick="delSale(${i})" aria-label="Quitar venta">✕</button></td></tr>`).join("")
     :`<tr class="empty"><td colspan="5">Aún no hay ventas. Elige un plan y agrégalo.</td></tr>`;
 }
 
